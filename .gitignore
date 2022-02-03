@@ -1,0 +1,28 @@
+# Other IDE files
+*.classpath
+*.project
+*.settings/
+.idea/*
+*.iml
+.DS_Store
+
+# Checkstyle-IDEA config
+!.idea/checkstyle-idea.xml
+
+# Essentials files
+/Essentials/userdata
+/Essentials/config.yml
+/Essentials/kits.yml
+/Essentials/userdata/testplayer1.yml
+/Essentials/usermap.csv
+
+# Build files
+.gradle/
+/jars/
+out/
+build/
+target/
+*.class
+
+# Run directory
+/run/
