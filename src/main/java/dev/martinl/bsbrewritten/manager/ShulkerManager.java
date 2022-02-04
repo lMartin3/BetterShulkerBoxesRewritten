@@ -60,20 +60,17 @@ public class ShulkerManager {
         Bukkit.broadcastMessage("Stack clone is: " + stackClone.getType());
         ItemStack target = stackClone;
 
-        if(!MaterialUtil.isShulkerBox(target.getType())) {
-            Bukkit.broadcastMessage("Target was not shulker: " + target.getType().toString());
-
-            boolean found = false;
-            for(ItemStack is : player.getInventory().getContents()) {
-                if(is!=null&&is.equals(stackClone)) {
-                    found = true;
-                    target = is;
-                    break;
-                }
+        Bukkit.broadcastMessage("Target was not shulker: " + target.getType().toString());
+        boolean found = false;
+        for(ItemStack is : player.getInventory().getContents()) {
+            if(is!=null&&is.equals(stackClone)) {
+                found = true;
+                target = is;
+                break;
             }
-            if(!found) {
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "WARNING! Player " + player.getName() + " closed a shulkerbox and changes were not saved!");
-            }
+        }
+        if(!found) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "WARNING! Player " + player.getName() + " closed a shulkerbox and changes were not saved!");
         }
 
         BlockStateMeta cMeta = (BlockStateMeta) target.getItemMeta();
