@@ -24,7 +24,6 @@ public class InteractListener implements Listener {
 
     @EventHandler(ignoreCancelled = false)
     public void onInteract(PlayerInteractEvent e) {
-        Bukkit.broadcastMessage(e.getAction().toString());
         if(e.getAction()!=Action.RIGHT_CLICK_AIR) return;
         ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
         if(!MaterialUtil.isShulkerBox(is.getType())) return;

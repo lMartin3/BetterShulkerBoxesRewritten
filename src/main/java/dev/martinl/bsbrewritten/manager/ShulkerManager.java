@@ -36,8 +36,6 @@ public class ShulkerManager {
         BlockStateMeta bsm = (BlockStateMeta) shulkerStack.getItemMeta();
         assert bsm != null;
         ShulkerBox shulker = (ShulkerBox) bsm.getBlockState();
-
-        Bukkit.broadcastMessage("Received open " + shulker.getLock());
         Inventory inventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, "asd");
         inventory.setContents(shulker.getInventory().getContents());
         player.openInventory(inventory);
@@ -52,7 +50,6 @@ public class ShulkerManager {
         boolean found = false;
         for(ItemStack is : player.getInventory().getContents()) {
             if(is!=null&&is.equals(correspondingStack)) {
-                Bukkit.broadcastMessage("FOUND!");
                 found = true;
             }
         }
@@ -62,6 +59,8 @@ public class ShulkerManager {
         BlockStateMeta cMeta = (BlockStateMeta) correspondingStack.getItemMeta();
         ShulkerBox shulker = (ShulkerBox) cMeta.getBlockState();
         shulker.getInventory().setContents(inventory.getContents());
+        cMeta.setBlockState(shulker);
+        correspondingStack.setItemMeta(cMeta);
         Bukkit.broadcastMessage("End");
     }
 
