@@ -16,10 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ShulkerManager {
     private final BSBRewritten instance;
@@ -39,29 +36,53 @@ public class ShulkerManager {
         Inventory inventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, "asd");
         inventory.setContents(shulker.getInventory().getContents());
         player.openInventory(inventory);
-        openShulkerInventories.put(inventory, shulkerStack);
+        ItemStack clone = shulkerStack.clone();
+        openShulkerInventories.put(inventory, clone);
+        Bukkit.broadcastMessage("Put " + clone.getType().toString());
     }
 
-    public void closeShulkerBox(Player player, Inventory inventory) {
-        if(!openShulkerInventories.containsKey(inventory)) return;
-        ItemStack correspondingStack = openShulkerInventories.get(inventory);
+    public ItemStack closeShulkerBox(Player player, Inventory inventory, Optional<ItemStack> useStack) {
+        player.getOpenInventory().getTopInventory();
+        if(!openShulkerInventories.containsKey(inventory)) return null;
+
+        ItemStack stackClone = openShulkerInventories.get(inventory);
+        if(useStack.isPresent()) {
+            stackClone = useStack.get();
+        }
+
+        openShulkerInventories.remove(inventory);
+        if(player.getOpenInventory().getTopInventory().getType() == InventoryType.SHULKER_BOX) {
+            player.closeInventory();
+        }
 
 
-        boolean found = false;
-        for(ItemStack is : player.getInventory().getContents()) {
-            if(is!=null&&is.equals(correspondingStack)) {
-                found = true;
+
+        Bukkit.broadcastMessage("Stack clone is: " + stackClone.getType());
+        ItemStack target = stackClone;
+
+        if(!MaterialUtil.isShulkerBox(target.getType())) {
+            Bukkit.broadcastMessage("Target was not shulker: " + target.getType().toString());
+
+            boolean found = false;
+            for(ItemStack is : player.getInventory().getContents()) {
+                if(is!=null&&is.equals(stackClone)) {
+                    found = true;
+                    target = is;
+                    break;
+                }
+            }
+            if(!found) {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "WARNING! Player " + player.getName() + " closed a shulkerbox and changes were not saved!");
             }
         }
-        if(!found) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "WARNING! Player " + player.getName() + " closed a shulkerbox and changes were not saved!");
-        }
-        BlockStateMeta cMeta = (BlockStateMeta) correspondingStack.getItemMeta();
+
+        BlockStateMeta cMeta = (BlockStateMeta) target.getItemMeta();
         ShulkerBox shulker = (ShulkerBox) cMeta.getBlockState();
         shulker.getInventory().setContents(inventory.getContents());
         cMeta.setBlockState(shulker);
-        correspondingStack.setItemMeta(cMeta);
+        target.setItemMeta(cMeta);
         Bukkit.broadcastMessage("End");
+        return target;
     }
 
     public boolean isShulkerInventory(Inventory inv) {
@@ -77,6 +98,10 @@ public class ShulkerManager {
             }
         }
         return false;
+    }
+
+    public ItemStack getCorrespondingStack(Inventory inv) {
+        return openShulkerInventories.getOrDefault(inv, null);
     }
 
 
