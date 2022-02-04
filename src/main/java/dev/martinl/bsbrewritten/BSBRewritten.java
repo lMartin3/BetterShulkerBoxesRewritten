@@ -2,6 +2,7 @@ package dev.martinl.bsbrewritten;
 
 import dev.martinl.bsbrewritten.listeners.InteractListener;
 import dev.martinl.bsbrewritten.listeners.InventoryCloseListener;
+import dev.martinl.bsbrewritten.listeners.MergeEmptyShulkersListener;
 import dev.martinl.bsbrewritten.manager.ShulkerManager;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -17,6 +18,7 @@ public class BSBRewritten extends JavaPlugin {
         shulkerManager = new ShulkerManager(this);
         InteractListener interactListener = new InteractListener(this);
         InventoryCloseListener inventoryCloseListener = new InventoryCloseListener(this);
+        MergeEmptyShulkersListener mergeEmptyShulkersListener = new MergeEmptyShulkersListener(this);
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "BetterShulkerBoxes version " +
                 ChatColor.YELLOW + this.getDescription().getVersion()

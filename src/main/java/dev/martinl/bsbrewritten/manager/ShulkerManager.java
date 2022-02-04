@@ -20,7 +20,7 @@ import java.util.*;
 
 public class ShulkerManager {
     private final BSBRewritten instance;
-    private HashMap<Inventory, ItemStack> openShulkerInventories = new HashMap<>();
+    private HashMap<Inventory, ShulkerOpenData> openShulkerInventories = new HashMap<>();
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 
@@ -37,15 +37,14 @@ public class ShulkerManager {
         inventory.setContents(shulker.getInventory().getContents());
         player.openInventory(inventory);
         ItemStack clone = shulkerStack.clone();
-        openShulkerInventories.put(inventory, clone);
-        Bukkit.broadcastMessage("Put " + clone.getType().toString());
+        openShulkerInventories.put(inventory, new ShulkerOpenData(clone, player.getLocation()));
     }
 
     public ItemStack closeShulkerBox(Player player, Inventory inventory, Optional<ItemStack> useStack) {
         player.getOpenInventory().getTopInventory();
         if(!openShulkerInventories.containsKey(inventory)) return null;
 
-        ItemStack stackClone = openShulkerInventories.get(inventory);
+        ItemStack stackClone = openShulkerInventories.get(inventory).getItemStack();
         if(useStack.isPresent()) {
             stackClone = useStack.get();
         }
@@ -98,6 +97,12 @@ public class ShulkerManager {
     }
 
     public ItemStack getCorrespondingStack(Inventory inv) {
+        ShulkerOpenData sod = openShulkerInventories.getOrDefault(inv, null);
+        if(sod==null) return null;
+        return sod.getItemStack();
+    }
+
+    public ShulkerOpenData getShulkerOpenData(Inventory inv) {
         return openShulkerInventories.getOrDefault(inv, null);
     }
 

@@ -1,6 +1,7 @@
 package dev.martinl.bsbrewritten.listeners;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
+import dev.martinl.bsbrewritten.manager.ShulkerOpenData;
 import dev.martinl.bsbrewritten.util.MaterialUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -64,7 +65,9 @@ public class InventoryCloseListener implements Listener {
         if(e.getPlayer().getOpenInventory().getType()!=InventoryType.SHULKER_BOX) return; //check if the open inventory is one from a shulker box
         if(e.getPlayer().getOpenInventory().getTopInventory().getLocation()!=null) return; //check if the shulker is a block
         if(!instance.getShulkerManager().doesPlayerHaveShulkerOpen(e.getPlayer().getUniqueId())) return; //check if the inventory belongs to BSB
-        if(e.getFrom().distance(e.getTo())>1) {
+        ShulkerOpenData sod = instance.getShulkerManager().getShulkerOpenData(e.getPlayer().getOpenInventory().getTopInventory());
+        if(sod==null) return;
+        if(sod.getOpenLocation().distance(e.getTo())>1) {
             instance.getShulkerManager().closeShulkerBox(e.getPlayer(), e.getPlayer().getOpenInventory().getTopInventory(), Optional.empty());
         }
     }
@@ -102,8 +105,17 @@ public class InventoryCloseListener implements Listener {
         instance.getShulkerManager().closeShulkerBox(player, player.getOpenInventory().getTopInventory(), Optional.empty());
     }
 
+
+    /*
+        This SHOULD prevent someone from trying to duplicate items by closing an inventory locally and then opening
+        another one. The server should not allow the player to open another inventory before closing the one that's
+        already open, but this is just to be safe.
+     */
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e) {
-        Bukkit.broadcastMessage(e.getInventory().getType().toString() + " - " + e.getPlayer().getOpenInventory().getTopInventory().getType().toString());
+        if(instance.getShulkerManager().doesPlayerHaveShulkerOpen(e.getPlayer().getUniqueId())&&!instance.getShulkerManager().isShulkerInventory(e.getInventory())
+        &&e.getPlayer().getOpenInventory().getTopInventory().getType()==InventoryType.SHULKER_BOX) {
+            instance.getShulkerManager().closeShulkerBox((Player) e.getPlayer(), e.getPlayer().getOpenInventory().getTopInventory(), Optional.empty());
+        }
     }
 }
