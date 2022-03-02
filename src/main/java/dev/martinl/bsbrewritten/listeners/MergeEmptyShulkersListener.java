@@ -23,10 +23,11 @@ public class MergeEmptyShulkersListener implements Listener {
         Player player = (Player) e.getWhoClicked();
         Inventory clickedInventory = e.getClickedInventory();
         if(clickedInventory==null) return;
-        if(clickedInventory.getType()!= InventoryType.CRAFTING) {
+        if(clickedInventory.getType()!= InventoryType.PLAYER) {
             Bukkit.broadcastMessage("Wrong type: " + clickedInventory.getType().toString());
             return;
         }
+
         if(player.getOpenInventory().getTopInventory().getType()!=InventoryType.CRAFTING) {
             Bukkit.broadcastMessage("Wrong top type: " + player.getOpenInventory().getTopInventory().getType().toString());
             return;

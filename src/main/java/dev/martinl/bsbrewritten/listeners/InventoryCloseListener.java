@@ -8,10 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -66,16 +63,12 @@ public class InventoryCloseListener implements Listener {
         if(e.getPlayer().getOpenInventory().getTopInventory().getLocation()!=null) return; //check if the shulker is a block
         if(!instance.getShulkerManager().doesPlayerHaveShulkerOpen(e.getPlayer().getUniqueId())) return; //check if the inventory belongs to BSB
         ShulkerOpenData sod = instance.getShulkerManager().getShulkerOpenData(e.getPlayer().getOpenInventory().getTopInventory());
-        if(sod==null) return;
+        if(sod==null||e.getTo()==null) return;
         if(sod.getOpenLocation().distance(e.getTo())>1) {
             instance.getShulkerManager().closeShulkerBox(e.getPlayer(), e.getPlayer().getOpenInventory().getTopInventory(), Optional.empty());
         }
     }
 
-    @EventHandler
-    public void onDamage() {
-
-    }
 
     @EventHandler
     public void onTeleport(PlayerTeleportEvent e) {
@@ -107,7 +100,7 @@ public class InventoryCloseListener implements Listener {
 
 
     /*
-        This SHOULD prevent someone from trying to duplicate items by closing an inventory locally and then opening
+        This should prevent someone from trying to duplicate items by closing an inventory locally and then opening
         another one. The server should not allow the player to open another inventory before closing the one that's
         already open, but this is just to be safe.
      */
@@ -116,6 +109,29 @@ public class InventoryCloseListener implements Listener {
         if(instance.getShulkerManager().doesPlayerHaveShulkerOpen(e.getPlayer().getUniqueId())&&!instance.getShulkerManager().isShulkerInventory(e.getInventory())
         &&e.getPlayer().getOpenInventory().getTopInventory().getType()==InventoryType.SHULKER_BOX) {
             instance.getShulkerManager().closeShulkerBox((Player) e.getPlayer(), e.getPlayer().getOpenInventory().getTopInventory(), Optional.empty());
+        }
+    }
+
+
+    /*
+    * This should prevent players from moving shulkers around in their inventories while they have a BSB shulker open
+    * */
+    @EventHandler(ignoreCancelled = true)
+    public void onClick(InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
+        Inventory clickedInventory = e.getClickedInventory();
+        if(clickedInventory==null) return;
+
+        ItemStack clickedItem = e.getCurrentItem();
+        if(clickedItem==null||!MaterialUtil.isShulkerBox(clickedItem.getType())) return;
+
+        Inventory topInventory = player.getOpenInventory().getTopInventory();
+        ItemStack correspondingStack = instance.getShulkerManager().getCorrespondingStack(topInventory);
+        if(correspondingStack==null) return;
+
+        if(correspondingStack.equals(clickedItem)) {
+            Bukkit.broadcastMessage("Click on open shulker detected!");
+            e.setCancelled(true);
         }
     }
 }

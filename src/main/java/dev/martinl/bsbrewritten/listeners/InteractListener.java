@@ -6,10 +6,15 @@ import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.MaterialUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.block.ShulkerBox;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
@@ -31,5 +36,21 @@ public class InteractListener implements Listener {
         BlockStateMeta bsm = (BlockStateMeta) is.getItemMeta();
         assert bsm != null;
         instance.getShulkerManager().openShulkerBoxInventory(e.getPlayer(), is);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onClick(InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
+        Inventory clickedInventory = e.getClickedInventory();
+        if(e.getClick()!= ClickType.SHIFT_RIGHT) return;
+        if (clickedInventory == null) return;
+        if (clickedInventory.getType() != InventoryType.PLAYER) {
+            return;
+        }
+        ItemStack clicked = e.getCurrentItem();
+        if(clicked==null||!MaterialUtil.isShulkerBox(clicked.getType())) return;
+        e.setCancelled(true);
+        instance.getShulkerManager().openShulkerBoxInventory(player, clicked);
+
     }
 }
