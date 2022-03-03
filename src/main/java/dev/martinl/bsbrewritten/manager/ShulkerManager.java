@@ -81,10 +81,7 @@ public class ShulkerManager {
 
 
 
-        Bukkit.broadcastMessage("Stack clone is: " + stackClone.getType());
         ItemStack target = stackClone;
-
-        Bukkit.broadcastMessage("Target was not shulker: " + target.getType().toString());
         boolean found = false;
         for(ItemStack is : player.getInventory().getContents()) {
             if(is!=null&&is.equals(stackClone)) {
@@ -105,7 +102,6 @@ public class ShulkerManager {
 
         Sound toPlay = instance.getConfigurationParser().getCloseSound();
         if(toPlay!=null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
-
         return target;
     }
 
@@ -135,12 +131,21 @@ public class ShulkerManager {
     }
 
 
-    public void closeAllInventories() {
-        ArrayList<HumanEntity> playersToCloseInventory = new ArrayList<>();
+    public void closeAllInventories(boolean disableCall) {
+        HashMap<HumanEntity, Inventory> playersToCloseInventory = new HashMap<>();
         for(Inventory inventory : openShulkerInventories.keySet()) {
-            playersToCloseInventory.addAll(inventory.getViewers());
+            for(HumanEntity he : inventory.getViewers()) {
+                playersToCloseInventory.put(he, inventory);
+            }
         }
-        playersToCloseInventory.forEach(HumanEntity::closeInventory);
+        for(Map.Entry<HumanEntity, Inventory> entry : playersToCloseInventory.entrySet()) {
+            Player player = (Player) entry.getKey();
+            player.closeInventory();
+            if(disableCall) {
+                closeShulkerBox(player, entry.getValue(), Optional.empty());
+            }
+        };
+
     }
 
     private int getPlayerCooldown(UUID uuid) {

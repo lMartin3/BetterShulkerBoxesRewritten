@@ -35,7 +35,7 @@ public class BSBRewritten extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        shulkerManager.closeAllInventories();
+        shulkerManager.closeAllInventories(true);
     }
 
 

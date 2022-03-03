@@ -32,7 +32,6 @@ public class InventoryCloseListener implements Listener {
         if(inventory.getType()!= InventoryType.SHULKER_BOX) return; //validate inventory type
         if(inventory.getHolder()!=null||e.getInventory().getLocation()!=null) return; //check that the shulker inventory is not a block inventory
         if(!instance.getShulkerManager().isShulkerInventory(inventory)) return; //check that the inventory belongs to BSB
-        Bukkit.broadcastMessage("Is shulker inventory: " + instance.getShulkerManager().isShulkerInventory(inventory));
         instance.getShulkerManager().closeShulkerBox(player, inventory, Optional.empty());
     }
 
@@ -46,14 +45,10 @@ public class InventoryCloseListener implements Listener {
         if(!instance.getShulkerManager().doesPlayerHaveShulkerOpen(e.getPlayer().getUniqueId())) return; //check if the inventory belongs to BSB
         ItemStack corresponding = instance.getShulkerManager().getCorrespondingStack(e.getPlayer().getOpenInventory().getTopInventory());
         if(corresponding==null) {
-            Bukkit.broadcastMessage("Corresponding is null!");
             return;
         } else if(!corresponding.equals(droppedItem)) {
-            Bukkit.broadcastMessage("Corresponding is not equal to the dropped item");
-            Bukkit.broadcastMessage(corresponding.getType().toString());
             return;
         }
-        //Bukkit.broadcastMessage("Should work!");
         e.setCancelled(true);
     }
 
@@ -137,7 +132,6 @@ public class InventoryCloseListener implements Listener {
         if(clickedItem==null||!MaterialUtil.isShulkerBox(clickedItem.getType())) return;
 
         if(correspondingStack.equals(clickedItem)) {
-            Bukkit.broadcastMessage("Click on open shulker detected!");
             e.setCancelled(true);
         }
     }

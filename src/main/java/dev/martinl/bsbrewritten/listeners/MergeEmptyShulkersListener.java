@@ -27,12 +27,10 @@ public class MergeEmptyShulkersListener implements Listener {
         if(e.getClick()!=ClickType.RIGHT);
         if(clickedInventory==null) return;
         if(clickedInventory.getType()!= InventoryType.PLAYER) {
-            Bukkit.broadcastMessage("Wrong type: " + clickedInventory.getType().toString());
             return;
         }
 
         if(player.getOpenInventory().getTopInventory().getType()!=InventoryType.CRAFTING) {
-            Bukkit.broadcastMessage("Wrong top type: " + player.getOpenInventory().getTopInventory().getType().toString());
             return;
         }
 
@@ -43,19 +41,19 @@ public class MergeEmptyShulkersListener implements Listener {
 
         if(!MaterialUtil.isShulkerBox(currentItem.getType())||!MaterialUtil.isShulkerBox(cursorItem.getType())) return;
 
+        /*
         Bukkit.broadcastMessage(
                 "Clicked item: " + format(clickedItem) + "\n" +
                 "Cursor item: " + format(cursorItem) + "\n" +
                 "Current item: " + format(currentItem) + "\n" +
                         "Click type: " + clickType.toString()
         );
-
+        */
         if(currentItem.equals(cursorItem)) {
             e.setCurrentItem(new ItemStack(Material.AIR));;
             cursorItem.setAmount(cursorItem.getAmount()+1);
             e.setCancelled(true);
         } else {
-            Bukkit.broadcastMessage("No - Different.");
         }
 
 
