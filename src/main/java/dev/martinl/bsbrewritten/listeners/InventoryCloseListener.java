@@ -115,6 +115,7 @@ public class InventoryCloseListener implements Listener {
 
     /*
     * This should prevent players from moving shulkers around in their inventories while they have a BSB shulker open
+    * Also this works for read only mode
     * */
     @EventHandler(ignoreCancelled = true)
     public void onClick(InventoryClickEvent e) {
@@ -122,12 +123,18 @@ public class InventoryCloseListener implements Listener {
         Inventory clickedInventory = e.getClickedInventory();
         if(clickedInventory==null) return;
 
-        ItemStack clickedItem = e.getCurrentItem();
-        if(clickedItem==null||!MaterialUtil.isShulkerBox(clickedItem.getType())) return;
-
         Inventory topInventory = player.getOpenInventory().getTopInventory();
         ItemStack correspondingStack = instance.getShulkerManager().getCorrespondingStack(topInventory);
+
         if(correspondingStack==null) return;
+
+        if(instance.getConfigurationParser().isEnableReadOnly()) {
+            e.setCancelled(true);
+        }
+
+
+        ItemStack clickedItem = e.getCurrentItem();
+        if(clickedItem==null||!MaterialUtil.isShulkerBox(clickedItem.getType())) return;
 
         if(correspondingStack.equals(clickedItem)) {
             Bukkit.broadcastMessage("Click on open shulker detected!");

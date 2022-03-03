@@ -1,1 +1,12 @@
+#Please do not modify this
 config-version: 3.0.0
+
+# Open and close sounds, use sound names from this list https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+open_sound: 'BLOCK_SHULKER_BOX_OPEN'
+close_sound: 'BLOCK_SHULKER_BOX_CLOSE'
+
+cooldown: 5000 # Integer - Time a player has to wait between uses of the plugin's features, set to 0 to disable
+requires_permission: true # Boolean - Set this to false if you want to allow anyone to use the plugin
+enable_read_only: true # Boolean - Set this to true if you just want players to be able to preview a shulkerbox's contents
+enable_right_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by rightclicking
+enable_inventory_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by shift clicking in their inventories

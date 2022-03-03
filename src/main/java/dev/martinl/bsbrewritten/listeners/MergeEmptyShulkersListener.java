@@ -1,7 +1,9 @@
 package dev.martinl.bsbrewritten.listeners;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
+import dev.martinl.bsbrewritten.util.MaterialUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,6 +24,7 @@ public class MergeEmptyShulkersListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         Inventory clickedInventory = e.getClickedInventory();
+        if(e.getClick()!=ClickType.RIGHT);
         if(clickedInventory==null) return;
         if(clickedInventory.getType()!= InventoryType.PLAYER) {
             Bukkit.broadcastMessage("Wrong type: " + clickedInventory.getType().toString());
@@ -38,12 +41,25 @@ public class MergeEmptyShulkersListener implements Listener {
         ItemStack currentItem = e.getCurrentItem();
         ClickType clickType = e.getClick();
 
+        if(!MaterialUtil.isShulkerBox(currentItem.getType())||!MaterialUtil.isShulkerBox(cursorItem.getType())) return;
+
         Bukkit.broadcastMessage(
                 "Clicked item: " + format(clickedItem) + "\n" +
                 "Cursor item: " + format(cursorItem) + "\n" +
                 "Current item: " + format(currentItem) + "\n" +
                         "Click type: " + clickType.toString()
         );
+
+        if(currentItem.equals(cursorItem)) {
+            e.setCurrentItem(new ItemStack(Material.AIR));;
+            cursorItem.setAmount(cursorItem.getAmount()+1);
+            e.setCancelled(true);
+        } else {
+            Bukkit.broadcastMessage("No - Different.");
+        }
+
+
+
     }
 
     private String format(ItemStack is) {

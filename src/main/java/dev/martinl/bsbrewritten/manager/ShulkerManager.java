@@ -3,10 +3,11 @@ package dev.martinl.bsbrewritten.manager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.martinl.bsbrewritten.BSBRewritten;
-import dev.martinl.bsbrewritten.util.MaterialUtil;
+import dev.martinl.bsbrewritten.util.BSBPermission;
+import dev.martinl.bsbrewritten.util.TimeFormatter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -14,7 +15,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.*;
 
@@ -22,6 +22,7 @@ public class ShulkerManager {
     private final BSBRewritten instance;
     private HashMap<Inventory, ShulkerOpenData> openShulkerInventories = new HashMap<>();
     private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private HashMap<UUID, Long> lastOpened = new HashMap<>();
 
 
     public ShulkerManager(BSBRewritten instance) {
@@ -30,6 +31,27 @@ public class ShulkerManager {
 
 
     public void openShulkerBoxInventory(Player player, ItemStack shulkerStack) {
+
+        //permission check
+        if(instance.getConfigurationParser().isRequiresPermission()) {
+            if(!player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
+                player.sendMessage(ChatColor.RED + "No permission");
+                return;
+            }
+        }
+
+        // Cooldown check
+        int cooldown = getPlayerCooldown(player.getUniqueId());
+        if(cooldown>0) {
+            int[] formatted = TimeFormatter.formatToMinutesAndSeconds(cooldown);
+            player.sendMessage(ChatColor.RED + "You are in cooldown for " + formatted[0] + " minutes and " + formatted[1] + " seconds.");
+            return;
+        }
+
+        // Check end
+
+        lastOpened.put(player.getUniqueId(), System.currentTimeMillis());
+
         BlockStateMeta bsm = (BlockStateMeta) shulkerStack.getItemMeta();
         assert bsm != null;
         ShulkerBox shulker = (ShulkerBox) bsm.getBlockState();
@@ -38,6 +60,9 @@ public class ShulkerManager {
         player.openInventory(inventory);
         ItemStack clone = shulkerStack.clone();
         openShulkerInventories.put(inventory, new ShulkerOpenData(clone, player.getLocation()));
+
+        Sound toPlay =instance.getConfigurationParser().getOpenSound();
+        if(toPlay!=null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
     }
 
     public ItemStack closeShulkerBox(Player player, Inventory inventory, Optional<ItemStack> useStack) {
@@ -77,7 +102,10 @@ public class ShulkerManager {
         shulker.getInventory().setContents(inventory.getContents());
         cMeta.setBlockState(shulker);
         target.setItemMeta(cMeta);
-        Bukkit.broadcastMessage("End");
+
+        Sound toPlay = instance.getConfigurationParser().getCloseSound();
+        if(toPlay!=null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
+
         return target;
     }
 
@@ -108,11 +136,17 @@ public class ShulkerManager {
 
 
     public void closeAllInventories() {
+        ArrayList<HumanEntity> playersToCloseInventory = new ArrayList<>();
         for(Inventory inventory : openShulkerInventories.keySet()) {
-            for(HumanEntity player : inventory.getViewers()) {
-                player.closeInventory();
-            }
+            playersToCloseInventory.addAll(inventory.getViewers());
         }
+        playersToCloseInventory.forEach(HumanEntity::closeInventory);
+    }
+
+    private int getPlayerCooldown(UUID uuid) {
+        if(!lastOpened.containsKey(uuid)) return 0;
+        long timePassed = System.currentTimeMillis() - lastOpened.getOrDefault(uuid, 0L);
+        return (int) Math.max(0, instance.getConfigurationParser().getCooldown()-timePassed);
     }
 
 
