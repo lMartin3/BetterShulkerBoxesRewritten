@@ -32,3 +32,6 @@ Of course! Please contact me.
 Download it from the [Spigot resource page](https://www.spigotmc.org/resources/bsb-better-shulker-boxes-1-12-1-16.58837/),
 this repository or compile it yourself.
 For security reasons, please avoid downloading the plugin from any other site.
+
+
+### Can I fork/modify your plugin?
