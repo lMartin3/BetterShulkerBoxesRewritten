@@ -12,6 +12,33 @@ but it is not guaranteed.
 
 For more information, please visit the [Spigot resource page](https://www.spigotmc.org/resources/bsb-better-shulker-boxes-1-12-1-16.58837/).
 
+## Installation
+1- Download or compile the JAR<br>
+2- Drop the JAR in your server's plugin folder<br>
+3- Restart your server<br>
+
+##Configuration
+You can tweak the plugin's settings in the config.yml file, it will be generated
+once the plugin runs for the first time, and it should be located in /plugins/BetterShulkerBoxes.<br>
+You can go to [this link](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/src/main/resources/config.yml)
+to see the default configuration settings, every option has an explanation of what it does.
+
+
+## Permissions
+| Permission                        | Description                                                                                                                                                                               |
+|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| bettershulkerboxes.use            | Allows the player to use the plugin's features                                                                                                                                            |
+| bettershulkerboxes.admin          | Allows the player to reload the plugin's configuration and check for updates. Players with this permission will also get alerted if a new version is available when they join the server. |
+| bettershulkerboxes.bypasscooldown | Allows the player to bypass the configured cooldown                                                                                                                                       |
+| bettershulkerboxes.*              | Grants all permissions                                                                                                                                                                    |
+
+
+## Commands
+| Command     | Description              |
+|-------------|--------------------------|
+| /bsb reload | Reload the configuration |
+| /bsb check  | Check for updates        |
+
 ## Contact info
 Discord: [link to server](https://discord.gg/DnAHWMG) <br>
 SpigotMC Forums: [Rektb](https://www.spigotmc.org/members/rektb.384908/) <br>
