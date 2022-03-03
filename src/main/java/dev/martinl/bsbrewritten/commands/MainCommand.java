@@ -59,12 +59,12 @@ public class MainCommand implements CommandExecutor {
                             .create();
             BaseComponent[] spigotLink =
                     new ComponentBuilder("-> Contact author via Spigot MC forums").color(net.md_5.bungee.api.ChatColor.GOLD)
-                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to join the support Discord server")))
+                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to open the author's page on Spigot")))
                             .event(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/members/rektb.384908/"))
                             .create();
             BaseComponent[] githubLink =
                     new ComponentBuilder("-> GitHub issues page").color(net.md_5.bungee.api.ChatColor.GRAY)
-                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to join the support Discord server")))
+                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to open the GitHub issues page")))
                             .event(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/lMartin3"))
                             .create();
             sender.sendMessage(prefix + ChatColor.YELLOW + "If you have any issues, do not hesitate to reach out to me!");
