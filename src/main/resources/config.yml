@@ -10,3 +10,12 @@ requires_permission: true # Boolean - Set this to false if you want to allow any
 enable_read_only: true # Boolean - Set this to true if you just want players to be able to preview a shulkerbox's contents
 enable_right_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by rightclicking
 enable_inventory_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by shift clicking in their inventories
+
+
+#Messages
+prefix: '&b[&eBSB&b]' # String - Chat prefix, do not add a space or any other characters after it
+inventory_name: '' # String - Text to be displayed as the inventory title, use %shulker_name% to display the item name
+open_message: '' #String - Message to be sent to a player when they open a shulker box, use %shulker_name% to display the item name, leave empty to disable
+close_message: '' #String - Message to be sent to a player when they close a shulker box, use %shulker_name% to display the item name, leave empty to disable
+no_permission_message: '' # String - Message to be sent to players who don't have permissions to use certain features of the plugin
+cooldown_message: '' # - String - Message to be sent to players who have to wait for the cooldown, use %minutes% and %seconds% to display the time remaining

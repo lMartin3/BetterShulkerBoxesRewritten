@@ -21,10 +21,10 @@ public class ConfigurationParser {
 
     private String prefix;
     private String inventoryName;
+    private String openMessage;
+    private String closeMessage;
     private String noPermissionMessage;
     private String cooldownMessage;
-    private String configReloadMessage;
-    private String configReloadErrorMessage;
 
 
 
@@ -36,9 +36,21 @@ public class ConfigurationParser {
         enableReadOnly = fileConfiguration.getBoolean("enable_read_only");
         enableRightClickOpen = fileConfiguration.getBoolean("enable_right_click_open");
         enableInventoryClickOpen = fileConfiguration.getBoolean("enable_inventory_click_open");
+
+        prefix = translateCC(strFromConfig("prefix"));
+        prefix = (prefix.isEmpty() ? "" : prefix + ChatColor.RESET + " ");
+        openMessage = strFromConfig("open_message");
+        closeMessage = strFromConfig("close_message");
+        inventoryName = translateCC(strFromConfig("inventory_name"));
+        noPermissionMessage = translateCC(strFromConfig("no_permission_message"));
+        cooldownMessage = translateCC(strFromConfig("cooldown_message"));
     }
 
-    private String tcc(String string) {
+    private String strFromConfig(String path) {
+        return translateCC(fileConfiguration.getString(path));
+    }
+
+    private String translateCC(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 }
