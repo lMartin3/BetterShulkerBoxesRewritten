@@ -3,3 +3,21 @@ version: 3.0.0
 main: dev.martinl.bsbrewritten.BSBRewritten
 author: 'lMartin3#1975'
 api-version: '1.13'
+commands:
+  bsb:
+    description: 'Main BetterShulkerBoxes command'
+
+permissions:
+  bettershulkerboxes.*:
+    description: Grants all BetterShulkerBoxes permissions
+    children:
+      bettershulkerboxes.use: true
+      bettershulkerboxes.admin: true
+      bettershulkerboxes.bypasscooldown: true
+  bettershulkerboxes.use:
+    description: Allows the player to use the plugin's features
+  bettershulkerboxes.admin:
+    description: Allows the player to reload the configuration and check for updates
+  bettershulkerboxes.bypasscooldown:
+    description: Allows the player to bypass the established cooldown
+

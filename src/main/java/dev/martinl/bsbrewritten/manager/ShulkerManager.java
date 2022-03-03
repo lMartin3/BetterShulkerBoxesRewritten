@@ -44,7 +44,8 @@ public class ShulkerManager {
         int cooldown = getPlayerCooldown(player.getUniqueId());
         if(cooldown>0) {
             int[] formatted = TimeFormatter.formatToMinutesAndSeconds(cooldown);
-            player.sendMessage(ChatColor.RED + "You are in cooldown for " + formatted[0] + " minutes and " + formatted[1] + " seconds.");
+            player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getCooldownMessage()
+                    .replace("%minutes%", String.valueOf(formatted[0])).replace("%seconds%", String.valueOf(formatted[1])));
             return;
         }
 
@@ -55,13 +56,18 @@ public class ShulkerManager {
         BlockStateMeta bsm = (BlockStateMeta) shulkerStack.getItemMeta();
         assert bsm != null;
         ShulkerBox shulker = (ShulkerBox) bsm.getBlockState();
-        Inventory inventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, "asd");
+        Inventory inventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, formatShulkerPlaceholder(instance.getConfigurationParser().getInventoryName(), shulkerStack));
         inventory.setContents(shulker.getInventory().getContents());
         player.openInventory(inventory);
         ItemStack clone = shulkerStack.clone();
         openShulkerInventories.put(inventory, new ShulkerOpenData(clone, player.getLocation()));
 
-        Sound toPlay =instance.getConfigurationParser().getOpenSound();
+
+        String msgToSend = formatShulkerPlaceholder(instance.getConfigurationParser().getOpenMessage(), shulkerStack);
+        if(!msgToSend.isEmpty()) {
+            player.sendMessage(instance.getConfigurationParser().getPrefix() + msgToSend);
+        }
+        Sound toPlay = instance.getConfigurationParser().getOpenSound();
         if(toPlay!=null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
     }
 
@@ -100,6 +106,11 @@ public class ShulkerManager {
         cMeta.setBlockState(shulker);
         target.setItemMeta(cMeta);
 
+
+        String msgToSend = formatShulkerPlaceholder(instance.getConfigurationParser().getCloseMessage(), target);
+        if(!msgToSend.isEmpty()) {
+            player.sendMessage(instance.getConfigurationParser().getPrefix() + msgToSend);
+        }
         Sound toPlay = instance.getConfigurationParser().getCloseSound();
         if(toPlay!=null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
         return target;
@@ -152,6 +163,14 @@ public class ShulkerManager {
         if(!lastOpened.containsKey(uuid)) return 0;
         long timePassed = System.currentTimeMillis() - lastOpened.getOrDefault(uuid, 0L);
         return (int) Math.max(0, instance.getConfigurationParser().getCooldown()-timePassed);
+    }
+
+    private String formatShulkerPlaceholder(String message, ItemStack shulker) {
+        if(message.isEmpty()) return message;
+        if(!message.contains("%shulker_name%")) return message;
+        if(shulker==null) return message.replace("%shulker_name%", "invalid");
+        if(shulker.getItemMeta()==null||!shulker.getItemMeta().hasDisplayName()) return message.replace("%shulker_name%", InventoryType.SHULKER_BOX.getDefaultTitle());
+        return message.replace("%shulker_name%", shulker.getItemMeta().getDisplayName());
     }
 
 
