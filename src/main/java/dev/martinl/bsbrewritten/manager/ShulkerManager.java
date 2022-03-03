@@ -38,7 +38,7 @@ public class ShulkerManager {
         //permission check
         if (instance.getConfigurationParser().isRequiresPermission()) {
             if (!player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
-                player.sendMessage(ChatColor.RED + "No permission");
+                player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getNoPermissionMessage());
                 return;
             }
         }
