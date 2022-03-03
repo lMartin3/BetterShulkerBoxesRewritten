@@ -19,3 +19,16 @@ open_message: '&7Opening shulkerbox (%shulker_name%)...' #String - Message to be
 close_message: '&7Closing shulkerbox (%shulker_name%)...' #String - Message to be sent to a player when they close a shulker box, use %shulker_name% to display the item name, leave empty to disable
 no_permission_message: '&cNo permission' # String - Message to be sent to players who don't have permissions to use certain features of the plugin
 cooldown_message: '&cYou have to wait %minutes% minutes and %seconds% before using this again' # - String - Message to be sent to players who have to wait for the cooldown, use %minutes% and %seconds% to display the time remaining
+
+
+# Since 2.7.0 Better Shulker Boxes automatically collects server information. This is with the only purpose of helping development.
+# The data sent is completely anonymous, and it does not include compromising information.
+# The data collected is limited to:
+# Server statistics: Player amount, online mode, Minecraft version, software (spigot, sponge, etc).
+# Hosting statistics: Number of cores of the CPU, system architecture, operating system, server location (by country) and java version.
+# Plugin (BSB only) statistics: Plugin version, some configuration parameters.
+# For more information about statistics visit https://bstats.org/
+
+# Although this data helps development I understand concerns about privacy.
+# If you choose not to participate on statistics, set the following parameter to false.
+enable_statistics: true

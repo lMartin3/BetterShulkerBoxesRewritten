@@ -19,6 +19,7 @@ public class ConfigurationParser {
     private boolean enableReadOnly;
     private boolean enableRightClickOpen;
     private boolean enableInventoryClickOpen;
+    private boolean enableStatistics;
 
     private String prefix;
     private String inventoryName;
@@ -36,6 +37,7 @@ public class ConfigurationParser {
         enableReadOnly = fileConfiguration.getBoolean("enable_read_only");
         enableRightClickOpen = fileConfiguration.getBoolean("enable_right_click_open");
         enableInventoryClickOpen = fileConfiguration.getBoolean("enable_inventory_click_open");
+        enableStatistics = fileConfiguration.getBoolean("enable_statistics");
 
         prefix = translateCC(strFromConfig("prefix"));
         prefix = (prefix.isEmpty() ? "" : prefix + ChatColor.RESET + " ");

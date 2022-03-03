@@ -6,6 +6,7 @@ import dev.martinl.bsbrewritten.listeners.InventoryCloseListener;
 import dev.martinl.bsbrewritten.listeners.PlayerJoinListener;
 import dev.martinl.bsbrewritten.manager.ShulkerManager;
 import dev.martinl.bsbrewritten.util.ConfigurationParser;
+import dev.martinl.bsbrewritten.util.Metrics;
 import dev.martinl.bsbrewritten.util.UpdateChecker;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -41,6 +42,12 @@ public class BSBRewritten extends JavaPlugin {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[BSB] " + ChatColor.GRAY + "You are running the latest BetterShulkerBoxes version.");
             }
         });
+
+        if(configurationParser.isEnableStatistics()) {
+            new Metrics(this, 6076);
+        } else {
+            Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[BSB] Statistics have been disabled, please consider enabling them to help plugin development.");
+        }
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "BetterShulkerBoxes version " +
                 ChatColor.YELLOW + this.getDescription().getVersion()
