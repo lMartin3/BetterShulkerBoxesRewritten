@@ -90,8 +90,7 @@ public class UpdateChecker {
         changes.add(ChatColor.YELLOW + "[BSB] A new version is available! You are currently running " +
                 ChatColor.GOLD + instance.getDescription().getVersion() + ChatColor.YELLOW + ", the newest version is " + ChatColor.GREEN + newVersion);
         changes.add(ChatColor.YELLOW + "[BSB] New version changes: ");
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[BSB] New version changes: ");
-        latestChangelog.forEach(ch->changes.add(ChatColor.GRAY + ch));
+        latestChangelog.forEach(ch->changes.add(ChatColor.GRAY + "-> " + ch));
         return changes;
     }
 

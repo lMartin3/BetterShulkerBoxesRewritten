@@ -36,7 +36,7 @@ public class MainCommand implements CommandExecutor {
                 instance.getUpdateChecker().checkForUpdates();
                 if(instance.getUpdateChecker().isNewerVersionAvailable()) {
                     for(String msg : instance.getUpdateChecker().getUpdateMessages()) {
-                        Bukkit.getConsoleSender().sendMessage(msg);
+                       sender.sendMessage(msg);
                     }
                 } else {
                     sender.sendMessage(ChatColor.YELLOW + "[BSB] " + ChatColor.GRAY  + "You are running the latest version of BetterShulkerBoxes.");

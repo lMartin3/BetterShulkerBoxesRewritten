@@ -20,7 +20,7 @@ public class PlayerJoinListener implements Listener {
         if(!e.getPlayer().hasPermission(BSBPermission.ADMIN.toString())) return;
         if(!instance.getUpdateChecker().isNewerVersionAvailable()) return;
         for(String msg : instance.getUpdateChecker().getUpdateMessages()) {
-            Bukkit.getConsoleSender().sendMessage(msg);
+            e.getPlayer().sendMessage(msg);
         }
     }
 }

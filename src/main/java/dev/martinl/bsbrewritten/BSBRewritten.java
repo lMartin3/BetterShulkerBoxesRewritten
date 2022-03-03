@@ -3,6 +3,7 @@ package dev.martinl.bsbrewritten;
 import dev.martinl.bsbrewritten.commands.MainCommand;
 import dev.martinl.bsbrewritten.listeners.InteractListener;
 import dev.martinl.bsbrewritten.listeners.InventoryCloseListener;
+import dev.martinl.bsbrewritten.listeners.PlayerJoinListener;
 import dev.martinl.bsbrewritten.manager.ShulkerManager;
 import dev.martinl.bsbrewritten.util.ConfigurationParser;
 import dev.martinl.bsbrewritten.util.UpdateChecker;
@@ -26,6 +27,7 @@ public class BSBRewritten extends JavaPlugin {
         loadAndParseConfig();
         InteractListener interactListener = new InteractListener(this);
         InventoryCloseListener inventoryCloseListener = new InventoryCloseListener(this);
+        PlayerJoinListener playerJoinListener = new PlayerJoinListener(this);
         MainCommand mainCommand = new MainCommand(this);
 
         updateChecker = new UpdateChecker(this, 58837);
