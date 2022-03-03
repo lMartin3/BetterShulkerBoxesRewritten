@@ -42,7 +42,7 @@ public class ShulkerManager {
 
         // Cooldown check
         int cooldown = getPlayerCooldown(player.getUniqueId());
-        if(cooldown>0) {
+        if(cooldown>0&&!player.hasPermission(BSBPermission.BYPASS_COOLDOWN.toString())) {
             int[] formatted = TimeFormatter.formatToMinutesAndSeconds(cooldown);
             player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getCooldownMessage()
                     .replace("%minutes%", String.valueOf(formatted[0])).replace("%seconds%", String.valueOf(formatted[1])));

@@ -1,7 +1,7 @@
 name: 'BetterShulkerBoxes'
 version: 3.0.0
 main: dev.martinl.bsbrewritten.BSBRewritten
-author: 'lMartin3#1975'
+author: 'Rektb (lMartin3#1975)'
 api-version: '1.13'
 commands:
   bsb:

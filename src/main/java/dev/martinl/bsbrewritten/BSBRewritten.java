@@ -25,7 +25,7 @@ public class BSBRewritten extends JavaPlugin {
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "BetterShulkerBoxes version " +
                 ChatColor.YELLOW + this.getDescription().getVersion()
-        + ChatColor.AQUA + " loaded! (" + this.getServer().getVersion() + " | " + this.getServer().getBukkitVersion() + ")");
+        + ChatColor.AQUA + " loaded! (" + this.getServer().getVersion() + " | " + this.getServer().getBukkitVersion() + ") - Made by Rektb (lMartin3#1975)");
     }
 
     @Override

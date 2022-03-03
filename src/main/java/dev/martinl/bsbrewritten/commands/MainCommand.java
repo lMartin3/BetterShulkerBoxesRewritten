@@ -2,10 +2,19 @@ package dev.martinl.bsbrewritten.commands;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.BSBPermission;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Content;
+import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+
+import java.awt.*;
 
 public class MainCommand implements CommandExecutor {
     public static final String COMMAND_NAME = "bsb";
@@ -32,8 +41,28 @@ public class MainCommand implements CommandExecutor {
         String prefix = instance.getConfigurationParser().getPrefix();
         sender.sendMessage(prefix + ChatColor.AQUA + "This server is running " + ChatColor.YELLOW + "Better Shulker Boxes v" + instance.getDescription().getVersion() + ChatColor.AQUA + ".");
         if(sender.hasPermission(BSBPermission.ADMIN.toString())) {
-            sender.sendMessage(prefix + ChatColor.AQUA + "Use " + ChatColor.YELLOW + "/bsb reload" + ChatColor.AQUA + " to reload the configuration.");
-            sender.sendMessage(prefix + ChatColor.AQUA + "Use " + ChatColor.YELLOW + "/bsb check" + ChatColor.AQUA + " to check for updates.");
+            sender.sendMessage(prefix + ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/bsb reload" + ChatColor.GRAY + " to reload the configuration.");
+            sender.sendMessage(prefix + ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/bsb check" + ChatColor.GRAY + " to check for updates.");
+            BaseComponent[] discordLink =
+                    new ComponentBuilder("-> Better Shulker Boxes support Discord server").color(net.md_5.bungee.api.ChatColor.BLUE)
+                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to join the support Discord server")))
+                            .event(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/DnAHWMG"))
+                            .create();
+            BaseComponent[] spigotLink =
+                    new ComponentBuilder("-> Contact author via Spigot MC forums").color(net.md_5.bungee.api.ChatColor.GOLD)
+                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to join the support Discord server")))
+                            .event(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/members/rektb.384908/"))
+                            .create();
+            BaseComponent[] githubLink =
+                    new ComponentBuilder("-> GitHub issues page").color(net.md_5.bungee.api.ChatColor.GRAY)
+                            .event(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text("Click to join the support Discord server")))
+                            .event(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/lMartin3"))
+                            .create();
+            sender.sendMessage(prefix + ChatColor.YELLOW + "If you have any issues, do not hesitate to reach out to me!");
+            sender.spigot().sendMessage(discordLink);
+            sender.spigot().sendMessage(spigotLink);
+            sender.spigot().sendMessage(githubLink);
+
         }
     }
 }
