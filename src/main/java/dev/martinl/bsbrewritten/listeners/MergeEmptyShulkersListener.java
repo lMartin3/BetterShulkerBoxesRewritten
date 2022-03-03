@@ -2,7 +2,6 @@ package dev.martinl.bsbrewritten.listeners;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.MaterialUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class MergeEmptyShulkersListener implements Listener {
     private final BSBRewritten instance;
+
     public MergeEmptyShulkersListener(BSBRewritten instance) {
         this.instance = instance;
         instance.getServer().getPluginManager().registerEvents(this, instance);
@@ -24,13 +24,13 @@ public class MergeEmptyShulkersListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         Inventory clickedInventory = e.getClickedInventory();
-        if(e.getClick()!=ClickType.RIGHT);
-        if(clickedInventory==null) return;
-        if(clickedInventory.getType()!= InventoryType.PLAYER) {
+        if (e.getClick() != ClickType.RIGHT) ;
+        if (clickedInventory == null) return;
+        if (clickedInventory.getType() != InventoryType.PLAYER) {
             return;
         }
 
-        if(player.getOpenInventory().getTopInventory().getType()!=InventoryType.CRAFTING) {
+        if (player.getOpenInventory().getTopInventory().getType() != InventoryType.CRAFTING) {
             return;
         }
 
@@ -39,7 +39,8 @@ public class MergeEmptyShulkersListener implements Listener {
         ItemStack currentItem = e.getCurrentItem();
         ClickType clickType = e.getClick();
 
-        if(!MaterialUtil.isShulkerBox(currentItem.getType())||!MaterialUtil.isShulkerBox(cursorItem.getType())) return;
+        if (!MaterialUtil.isShulkerBox(currentItem.getType()) || !MaterialUtil.isShulkerBox(cursorItem.getType()))
+            return;
 
         /*
         Bukkit.broadcastMessage(
@@ -49,19 +50,19 @@ public class MergeEmptyShulkersListener implements Listener {
                         "Click type: " + clickType.toString()
         );
         */
-        if(currentItem.equals(cursorItem)) {
-            e.setCurrentItem(new ItemStack(Material.AIR));;
-            cursorItem.setAmount(cursorItem.getAmount()+1);
+        if (currentItem.equals(cursorItem)) {
+            e.setCurrentItem(new ItemStack(Material.AIR));
+            ;
+            cursorItem.setAmount(cursorItem.getAmount() + 1);
             e.setCancelled(true);
         } else {
         }
 
 
-
     }
 
     private String format(ItemStack is) {
-        if(is==null) return "null";
+        if (is == null) return "null";
         return is.getType().toString();
     }
 }

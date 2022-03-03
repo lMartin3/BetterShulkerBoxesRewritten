@@ -5,6 +5,7 @@ public enum BSBPermission {
     ADMIN("bettershulkerboxes.admin"),
     BYPASS_COOLDOWN("bettershulkerboxes.bypasscooldown");
     final String value;
+
     BSBPermission(String value) {
         this.value = value;
     }

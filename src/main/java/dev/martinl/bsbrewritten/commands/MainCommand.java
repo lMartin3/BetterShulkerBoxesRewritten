@@ -6,19 +6,17 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Content;
 import net.md_5.bungee.api.chat.hover.content.Text;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.awt.*;
-
 public class MainCommand implements CommandExecutor {
     public static final String COMMAND_NAME = "bsb";
     private final BSBRewritten instance;
+
     public MainCommand(BSBRewritten instance) {
         this.instance = instance;
         instance.getCommand(COMMAND_NAME).setExecutor(this);
@@ -27,12 +25,23 @@ public class MainCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(args.length==0||args[0].equalsIgnoreCase("help")||!sender.hasPermission(BSBPermission.ADMIN.toString())) {
+        if (args.length == 0 || args[0].equalsIgnoreCase("help") || !sender.hasPermission(BSBPermission.ADMIN.toString())) {
             sendPluginInfo(sender);
-        } else if(args[0].equalsIgnoreCase("reload")) {
+        } else if (args[0].equalsIgnoreCase("reload")) {
             instance.reloadConfig();
             instance.loadAndParseConfig();
             sender.sendMessage(instance.getConfigurationParser().getPrefix() + ChatColor.AQUA + "Configuration reloaded!");
+        } else if (args[0].equalsIgnoreCase("check")) {
+            Bukkit.getScheduler().runTaskAsynchronously(instance, ()->{
+                instance.getUpdateChecker().checkForUpdates();
+                if(instance.getUpdateChecker().isNewerVersionAvailable()) {
+                    for(String msg : instance.getUpdateChecker().getUpdateMessages()) {
+                        Bukkit.getConsoleSender().sendMessage(msg);
+                    }
+                } else {
+                    sender.sendMessage(ChatColor.YELLOW + "[BSB] " + ChatColor.GRAY  + "You are running the latest version of BetterShulkerBoxes.");
+                }
+            });
         }
         return false;
     }
@@ -40,7 +49,7 @@ public class MainCommand implements CommandExecutor {
     private void sendPluginInfo(CommandSender sender) {
         String prefix = instance.getConfigurationParser().getPrefix();
         sender.sendMessage(prefix + ChatColor.AQUA + "This server is running " + ChatColor.YELLOW + "Better Shulker Boxes v" + instance.getDescription().getVersion() + ChatColor.AQUA + ".");
-        if(sender.hasPermission(BSBPermission.ADMIN.toString())) {
+        if (sender.hasPermission(BSBPermission.ADMIN.toString())) {
             sender.sendMessage(prefix + ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/bsb reload" + ChatColor.GRAY + " to reload the configuration.");
             sender.sendMessage(prefix + ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/bsb check" + ChatColor.GRAY + " to check for updates.");
             BaseComponent[] discordLink =

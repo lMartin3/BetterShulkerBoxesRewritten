@@ -6,7 +6,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 
-@Data @RequiredArgsConstructor
+@Data
+@RequiredArgsConstructor
 public class ConfigurationParser {
     private final FileConfiguration fileConfiguration;
 
@@ -25,7 +26,6 @@ public class ConfigurationParser {
     private String closeMessage;
     private String noPermissionMessage;
     private String cooldownMessage;
-
 
 
     public void parseConfiguration() {

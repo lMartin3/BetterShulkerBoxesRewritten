@@ -1,9 +1,9 @@
 package dev.martinl.bsbrewritten.util;
 
+import dev.martinl.bsbrewritten.BSBRewritten;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,18 +12,22 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class UpdateChecker {
+    private final BSBRewritten instance;
     private final int project;
     private URL checkURL;
     private URL changelogURL;
+    private boolean newerVersionAvailable = false;
     private String newVersion;
-    private final JavaPlugin plugin;
+    private ArrayList<String> latestChangelog = new ArrayList<>();
 
-    public UpdateChecker(JavaPlugin plugin, int projectID) {
-        this.plugin = plugin;
-        this.newVersion = plugin.getDescription().getVersion();
+
+    public UpdateChecker(BSBRewritten instance, int projectID) {
+        this.instance = instance;
+        this.newVersion = instance.getDescription().getVersion();
         this.project = projectID;
         try {
             this.checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + projectID);
@@ -39,7 +43,7 @@ public class UpdateChecker {
     }
 
     public String getActualVersion() {
-        return this.plugin.getDescription().getVersion();
+        return this.instance.getDescription().getVersion();
     }
 
     //GET request to a spigot api
@@ -47,10 +51,13 @@ public class UpdateChecker {
         try {
             URLConnection con = this.checkURL.openConnection();
             this.newVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            return !this.plugin.getDescription().getVersion().equals(this.newVersion);
+            boolean result = !this.instance.getDescription().getVersion().equals(this.newVersion);
+            newerVersionAvailable = result;
+            getChangelog();
+            return result;
         } catch (IOException ioex) {
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Error! BSB could not check for updates:");
-            plugin.getServer().getConsoleSender().sendMessage(ioex.toString());
+            instance.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Error! BSB could not check for updates:");
+            instance.getServer().getConsoleSender().sendMessage(ioex.toString());
             return false;
         }
     }
@@ -68,12 +75,24 @@ public class UpdateChecker {
                 lines.add(inputLine);
             }
             bufferedReader.close();
+            latestChangelog = lines;
             return lines;
         } catch (IOException ioex) {
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Error! BSB could not retrieve the changelog:");
-            plugin.getServer().getConsoleSender().sendMessage(ioex.toString());
+            instance.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Error! BSB could not retrieve the changelog:");
+            instance.getServer().getConsoleSender().sendMessage(ioex.toString());
+            latestChangelog = lines;
             return lines;
         }
+    }
+
+    public List<String> getUpdateMessages() {
+        ArrayList<String> changes =  new ArrayList<>();
+        changes.add(ChatColor.YELLOW + "[BSB] A new version is available! You are currently running " +
+                ChatColor.GOLD + instance.getDescription().getVersion() + ChatColor.YELLOW + ", the newest version is " + ChatColor.GREEN + newVersion);
+        changes.add(ChatColor.YELLOW + "[BSB] New version changes: ");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[BSB] New version changes: ");
+        latestChangelog.forEach(ch->changes.add(ChatColor.GRAY + ch));
+        return changes;
     }
 
 }

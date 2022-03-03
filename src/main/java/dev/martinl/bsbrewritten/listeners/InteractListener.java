@@ -4,8 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.MaterialUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,9 +27,9 @@ public class InteractListener implements Listener {
 
     @EventHandler(ignoreCancelled = false)
     public void onInteract(PlayerInteractEvent e) {
-        if(e.getAction()!=Action.RIGHT_CLICK_AIR) return;
+        if (e.getAction() != Action.RIGHT_CLICK_AIR) return;
         ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
-        if(!MaterialUtil.isShulkerBox(is.getType())) return;
+        if (!MaterialUtil.isShulkerBox(is.getType())) return;
         //todo permissions, cooldown, worldguard area perms, etc
         BlockStateMeta bsm = (BlockStateMeta) is.getItemMeta();
         assert bsm != null;
@@ -42,13 +40,13 @@ public class InteractListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         Inventory clickedInventory = e.getClickedInventory();
-        if(e.getClick()!= ClickType.SHIFT_RIGHT) return;
+        if (e.getClick() != ClickType.SHIFT_RIGHT) return;
         if (clickedInventory == null) return;
         if (clickedInventory.getType() != InventoryType.PLAYER) {
             return;
         }
         ItemStack clicked = e.getCurrentItem();
-        if(clicked==null||!MaterialUtil.isShulkerBox(clicked.getType())) return;
+        if (clicked == null || !MaterialUtil.isShulkerBox(clicked.getType())) return;
         e.setCancelled(true);
         instance.getShulkerManager().openShulkerBoxInventory(player, clicked);
 
