@@ -35,3 +35,4 @@ For security reasons, please avoid downloading the plugin from any other site.
 
 
 ### Can I fork/modify your plugin?
+Yes, you can, as long as you comply with the license (AGPLv3)
