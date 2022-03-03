@@ -40,7 +40,7 @@ public class InteractListener implements Listener {
     public void onClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
         Inventory clickedInventory = e.getClickedInventory();
-        if (e.getClick() != ClickType.SHIFT_RIGHT) return;
+        if (e.getClick() != ClickType.RIGHT) return;
         if (clickedInventory == null) return;
         if (clickedInventory.getType() != InventoryType.PLAYER) {
             return;
