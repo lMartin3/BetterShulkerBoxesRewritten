@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/527a4c96fc3b4d3b8298769bce48071d)](https://www.codacy.com/gh/lMartin3/BetterShulkerBoxesRewritten/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lMartin3/BetterShulkerBoxesRewritten&amp;utm_campaign=Badge_Grade)
 # Better Shulker Boxes _Rewritten_
 Better Shulker Boxes is a Spigot plugin for Minecraft that allows
 players to open shulker boxes more easily, by right-clicking while holding them
