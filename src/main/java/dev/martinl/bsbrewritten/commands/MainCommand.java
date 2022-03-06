@@ -32,14 +32,14 @@ public class MainCommand implements CommandExecutor {
             instance.loadAndParseConfig();
             sender.sendMessage(instance.getConfigurationParser().getPrefix() + ChatColor.AQUA + "Configuration reloaded!");
         } else if (args[0].equalsIgnoreCase("check")) {
-            Bukkit.getScheduler().runTaskAsynchronously(instance, ()->{
+            Bukkit.getScheduler().runTaskAsynchronously(instance, () -> {
                 instance.getUpdateChecker().checkForUpdates();
-                if(instance.getUpdateChecker().isNewerVersionAvailable()) {
-                    for(String msg : instance.getUpdateChecker().getUpdateMessages()) {
-                       sender.sendMessage(msg);
+                if (instance.getUpdateChecker().isNewerVersionAvailable()) {
+                    for (String msg : instance.getUpdateChecker().getUpdateMessages()) {
+                        sender.sendMessage(msg);
                     }
                 } else {
-                    sender.sendMessage(ChatColor.YELLOW + "[BSB] " + ChatColor.GRAY  + "You are running the latest version of BetterShulkerBoxes.");
+                    sender.sendMessage(ChatColor.YELLOW + "[BSB] " + ChatColor.GRAY + "You are running the latest version of BetterShulkerBoxes.");
                 }
             });
         }

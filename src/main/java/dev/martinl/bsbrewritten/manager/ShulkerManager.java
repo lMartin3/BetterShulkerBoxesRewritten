@@ -1,10 +1,8 @@
 package dev.martinl.bsbrewritten.manager;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.BSBPermission;
-import dev.martinl.bsbrewritten.util.TimeFormatter;
+import dev.martinl.bsbrewritten.util.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -24,7 +22,6 @@ import java.util.UUID;
 public class ShulkerManager {
     private final BSBRewritten instance;
     private HashMap<Inventory, ShulkerOpenData> openShulkerInventories = new HashMap<>();
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private HashMap<UUID, Long> lastOpened = new HashMap<>();
 
 
@@ -46,7 +43,7 @@ public class ShulkerManager {
         // Cooldown check
         int cooldown = getPlayerCooldown(player.getUniqueId());
         if (cooldown > 0 && !player.hasPermission(BSBPermission.BYPASS_COOLDOWN.toString())) {
-            int[] formatted = TimeFormatter.formatToMinutesAndSeconds(cooldown);
+            int[] formatted = TimeUtils.formatToMinutesAndSeconds(cooldown);
             player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getCooldownMessage()
                     .replace("%minutes%", String.valueOf(formatted[0])).replace("%seconds%", String.valueOf(formatted[1])));
             return;

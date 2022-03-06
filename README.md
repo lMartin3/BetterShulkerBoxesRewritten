@@ -23,7 +23,6 @@ once the plugin runs for the first time, and it should be located in /plugins/Be
 You can go to [this link](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/src/main/resources/config.yml)
 to see the default configuration settings, every option has an explanation of what it does.
 
-
 ## Permissions
 | Permission                        | Description                                                                                                                                                                               |
 |-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -31,7 +30,6 @@ to see the default configuration settings, every option has an explanation of wh
 | bettershulkerboxes.admin          | Allows the player to reload the plugin's configuration and check for updates. Players with this permission will also get alerted if a new version is available when they join the server. |
 | bettershulkerboxes.bypasscooldown | Allows the player to bypass the configured cooldown                                                                                                                                       |
 | bettershulkerboxes.*              | Grants all permissions                                                                                                                                                                    |
-
 
 ## Commands
 | Command     | Description              |
@@ -59,7 +57,6 @@ Of course! Please contact me.
 Download it from the [Spigot resource page](https://www.spigotmc.org/resources/bsb-better-shulker-boxes-1-12-1-16.58837/),
 this repository or compile it yourself.
 For security reasons, please avoid downloading the plugin from any other site.
-
 
 ### Can I fork/modify your plugin?
 Yes, you can, as long as you comply with the license (AGPLv3)

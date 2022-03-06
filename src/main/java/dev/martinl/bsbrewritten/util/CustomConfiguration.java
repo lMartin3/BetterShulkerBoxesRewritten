@@ -24,16 +24,17 @@ public class CustomConfiguration {
         this.fileType = fileType;
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void setup() {
         if (!instance.getDataFolder().exists()) {
-            boolean ignore = instance.getDataFolder().mkdir();
+            instance.getDataFolder().mkdir();
         }
         file = new File(instance.getDataFolder(), filename);
         if (!file.exists()) {
             instance.saveResource(configName + "." + fileType, false);
 
             try {
-                boolean ignore = file.createNewFile();
+                file.createNewFile();
             } catch (IOException e) {
                 Bukkit.getServer().getConsoleSender()
                         .sendMessage(ChatColor.RED + "File " + filename + " could not be created. Check write permissions.");

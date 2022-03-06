@@ -18,7 +18,6 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 
 public class InteractListener implements Listener {
     private final BSBRewritten instance;
-    private Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public InteractListener(BSBRewritten instance) {
         this.instance = instance;

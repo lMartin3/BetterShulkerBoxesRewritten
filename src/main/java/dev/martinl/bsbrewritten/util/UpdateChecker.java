@@ -86,11 +86,11 @@ public class UpdateChecker {
     }
 
     public List<String> getUpdateMessages() {
-        ArrayList<String> changes =  new ArrayList<>();
+        ArrayList<String> changes = new ArrayList<>();
         changes.add(ChatColor.YELLOW + "[BSB] " + ChatColor.GRAY + "A new version of BetterShulkerBoxes is available! You are currently running " +
                 ChatColor.GOLD + instance.getDescription().getVersion() + ChatColor.GRAY + ", the newest version is " + ChatColor.GREEN + newVersion);
         changes.add(ChatColor.YELLOW + "[BSB] New version changes: ");
-        latestChangelog.forEach(ch->changes.add(ChatColor.GRAY + "-> " + ch));
+        latestChangelog.forEach(ch -> changes.add(ChatColor.GRAY + "-> " + ch));
         return changes;
     }
 
