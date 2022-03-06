@@ -31,7 +31,7 @@ public class UpdateChecker {
         this.project = projectID;
         try {
             this.checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + projectID);
-            this.changelogURL = new URL("https://raw.githubusercontent.com/lMartin3/BetterShulkerBoxes/master/CHANGELOG.txt");
+            this.changelogURL = new URL("https://raw.githubusercontent.com/lMartin3/BetterShulkerBoxesRewritten/master/changelog.txt");
         } catch (MalformedURLException localMalformedURLException) {
             Bukkit.getServer().getConsoleSender().sendMessage("Error: MalformedURLException, please send this to the developer");
         }
