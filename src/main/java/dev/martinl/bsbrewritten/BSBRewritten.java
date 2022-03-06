@@ -26,10 +26,10 @@ public class BSBRewritten extends JavaPlugin {
     public void onEnable() {
         shulkerManager = new ShulkerManager(this);
         loadAndParseConfig();
-        InteractListener interactListener = new InteractListener(this);
-        InventoryCloseListener inventoryCloseListener = new InventoryCloseListener(this);
-        PlayerJoinListener playerJoinListener = new PlayerJoinListener(this);
-        MainCommand mainCommand = new MainCommand(this);
+        new InteractListener(this);
+        new InventoryCloseListener(this);
+        new PlayerJoinListener(this);
+        new MainCommand(this);
 
         updateChecker = new UpdateChecker(this, 58837);
 

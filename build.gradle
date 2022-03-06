@@ -32,7 +32,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 
-    compile 'com.google.code.gson:gson:2.8.9'
+    //compile 'com.google.code.gson:gson:2.9.0'
 }
 
 test {

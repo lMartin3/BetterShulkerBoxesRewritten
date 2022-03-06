@@ -1,7 +1,5 @@
 package dev.martinl.bsbrewritten.listeners;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.MaterialUtil;
 import org.bukkit.entity.Player;
