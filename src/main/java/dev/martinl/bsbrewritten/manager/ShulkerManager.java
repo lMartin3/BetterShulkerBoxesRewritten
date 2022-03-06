@@ -2,6 +2,7 @@ package dev.martinl.bsbrewritten.manager;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.BSBPermission;
+import dev.martinl.bsbrewritten.util.ConfigurationParser;
 import dev.martinl.bsbrewritten.util.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,11 +34,11 @@ public class ShulkerManager {
     public void openShulkerBoxInventory(Player player, ItemStack shulkerStack) {
 
         //permission check
-        if (instance.getConfigurationParser().isRequiresPermission()) {
-            if (!player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
-                player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getNoPermissionMessage());
-                return;
-            }
+        if (instance.getConfigurationParser().isRequiresPermission()&&
+                !player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
+            player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getNoPermissionMessage());
+            return;
+
         }
 
         // Cooldown check
@@ -62,13 +63,7 @@ public class ShulkerManager {
         ItemStack clone = shulkerStack.clone();
         openShulkerInventories.put(inventory, new ShulkerOpenData(clone, player.getLocation()));
 
-
-        String msgToSend = formatShulkerPlaceholder(instance.getConfigurationParser().getOpenMessage(), shulkerStack);
-        if (!msgToSend.isEmpty()) {
-            player.sendMessage(instance.getConfigurationParser().getPrefix() + msgToSend);
-        }
-        Sound toPlay = instance.getConfigurationParser().getOpenSound();
-        if (toPlay != null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
+        sendSoundAndMessage(player, shulkerStack, MessageSoundComb.OPEN);
     }
 
     public ItemStack closeShulkerBox(Player player, Inventory inventory, Optional<ItemStack> useStack) {
@@ -86,12 +81,12 @@ public class ShulkerManager {
         }
 
 
-        ItemStack target = stackClone;
+        ItemStack targetItem = stackClone;
         boolean found = false;
         for (ItemStack is : player.getInventory().getContents()) {
             if (is != null && is.equals(stackClone)) {
                 found = true;
-                target = is;
+                targetItem = is;
                 break;
             }
         }
@@ -99,20 +94,13 @@ public class ShulkerManager {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "WARNING! Player " + player.getName() + " closed a shulkerbox and changes were not saved!");
         }
 
-        BlockStateMeta cMeta = (BlockStateMeta) target.getItemMeta();
+        BlockStateMeta cMeta = (BlockStateMeta) targetItem.getItemMeta();
         ShulkerBox shulker = (ShulkerBox) cMeta.getBlockState();
         shulker.getInventory().setContents(inventory.getContents());
         cMeta.setBlockState(shulker);
-        target.setItemMeta(cMeta);
-
-
-        String msgToSend = formatShulkerPlaceholder(instance.getConfigurationParser().getCloseMessage(), target);
-        if (!msgToSend.isEmpty()) {
-            player.sendMessage(instance.getConfigurationParser().getPrefix() + msgToSend);
-        }
-        Sound toPlay = instance.getConfigurationParser().getCloseSound();
-        if (toPlay != null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
-        return target;
+        targetItem.setItemMeta(cMeta);
+        sendSoundAndMessage(player, targetItem, MessageSoundComb.CLOSE);
+        return targetItem;
     }
 
     public boolean isShulkerInventory(Inventory inv) {
@@ -155,7 +143,6 @@ public class ShulkerManager {
                 closeShulkerBox(player, entry.getValue(), Optional.empty());
             }
         }
-        ;
 
     }
 
@@ -172,6 +159,22 @@ public class ShulkerManager {
         if (shulker.getItemMeta() == null || !shulker.getItemMeta().hasDisplayName())
             return message.replace("%shulker_name%", InventoryType.SHULKER_BOX.getDefaultTitle());
         return message.replace("%shulker_name%", shulker.getItemMeta().getDisplayName());
+    }
+
+    private enum MessageSoundComb {
+        OPEN,
+        CLOSE
+    }
+
+
+    private void sendSoundAndMessage(Player player, ItemStack shulker, MessageSoundComb type) {
+        ConfigurationParser cfgp = instance.getConfigurationParser();
+        String msgToSend = formatShulkerPlaceholder((type==MessageSoundComb.OPEN ? cfgp.getOpenMessage() : cfgp.getCloseMessage()), shulker);
+        if (!msgToSend.isEmpty()) {
+            player.sendMessage(instance.getConfigurationParser().getPrefix() + msgToSend);
+        }
+        Sound toPlay = (type==MessageSoundComb.OPEN ? cfgp.getOpenSound() : cfgp.getCloseSound());
+        if (toPlay != null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
     }
 
 
