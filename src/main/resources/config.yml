@@ -1,5 +1,17 @@
+#  ___      _   _             ___ _        _ _             ___
+# | _ ) ___| |_| |_ ___ _ _  / __| |_ _  _| | |_____ _ _  | _ ) _____ _____ ___
+# | _ \/ -_)  _|  _/ -_) '_| \__ \ ' \ || | | / / -_) '_| | _ \/ _ \ \ / -_|_-<
+# |___/\___|\__|\__\___|_|   |___/_||_\_,_|_|_\_\___|_|   |___/\___/_\_\___/__/  by Rektb
+#
+# To see the default config, please visit https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/src/main/resources/config.yml
+#
+# Contact:
+# GitHub repository: https://github.com/lMartin3/BetterShulkerBoxesRewritten
+# SpigotMC page: https://www.spigotmc.org/resources/bsb-better-shulker-boxes-1-12-1-16.58837/
+# Discord server: https://discord.com/invite/DnAHWMG
+
 #Please do not modify this
-config-version: 3.0.0
+config-version: 3.1.0
 
 # Open and close sounds, use sound names from this list https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
 open_sound: 'BLOCK_SHULKER_BOX_OPEN'

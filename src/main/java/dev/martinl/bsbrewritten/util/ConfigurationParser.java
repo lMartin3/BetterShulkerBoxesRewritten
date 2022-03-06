@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class ConfigurationParser {
     private final FileConfiguration fileConfiguration;
 
+    private String oldVersionField;
 
     private Sound openSound;
     private Sound closeSound;
@@ -30,6 +31,7 @@ public class ConfigurationParser {
 
 
     public void parseConfiguration() {
+        oldVersionField = fileConfiguration.getString("version");
         openSound = Sound.valueOf(fileConfiguration.getString("open_sound"));
         closeSound = Sound.valueOf(fileConfiguration.getString("close_sound"));
         cooldown = fileConfiguration.getInt("cooldown");

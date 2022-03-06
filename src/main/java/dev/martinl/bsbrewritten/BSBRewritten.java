@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 
 @Getter
@@ -65,6 +66,18 @@ public class BSBRewritten extends JavaPlugin {
         saveConfig();
         configurationParser = new ConfigurationParser(this.getConfig());
         configurationParser.parseConfiguration();
+        if(configurationParser.getOldVersionField()!=null&&!configurationParser.getOldVersionField().isEmpty()) {
+            File oldFile = new File(getDataFolder(), "config.yml");
+            if(!oldFile.exists()) {
+                return;
+            }
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[BSB] Old configuration detected! (" + configurationParser.getOldVersionField() + ") File will be renamed to config-old.yml and a new config file will be created.");
+            oldFile.renameTo(new File(getDataFolder(), "config-old.yml"));
+            reloadConfig();
+            saveDefaultConfig();
+            configurationParser = new ConfigurationParser(this.getConfig());
+            configurationParser.parseConfiguration();
+        }
     }
 
     public int getServerVersion() {
