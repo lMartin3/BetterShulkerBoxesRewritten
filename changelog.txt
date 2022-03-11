@@ -1,2 +1,1 @@
-Modified configuration system
-Improved code a bit
+Fixed duplication glitch (Issue #2 on GitHub)
