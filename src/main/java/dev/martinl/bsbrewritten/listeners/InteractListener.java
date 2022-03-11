@@ -42,6 +42,9 @@ public class InteractListener implements Listener {
         if (clickedInventory.getType() != InventoryType.PLAYER) {
             return;
         }
+        if(player.getOpenInventory().getTopInventory().getType()!=InventoryType.CRAFTING) {
+            return;
+        }
         ItemStack clicked = e.getCurrentItem();
         if (clicked == null || !MaterialUtil.isShulkerBox(clicked.getType())) return;
         e.setCancelled(true);
