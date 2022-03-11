@@ -42,6 +42,7 @@ public class InteractListener implements Listener {
         if (clickedInventory.getType() != InventoryType.PLAYER) {
             return;
         }
+        /* Prevents players from opening a shulker if they have another inventory open */
         if(player.getOpenInventory().getTopInventory().getType()!=InventoryType.CRAFTING) {
             return;
         }
