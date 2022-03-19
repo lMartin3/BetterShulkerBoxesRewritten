@@ -22,7 +22,7 @@ requires_permission: true # Boolean - Set this to false if you want to allow any
 enable_read_only: false # Boolean - Set this to true if you just want players to be able to preview a shulkerbox's contents
 enable_right_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by rightclicking
 enable_inventory_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by shift clicking in their inventories
-
+disable_movement_check: false # Boolean - Set this to true if you want players to be able to open shulkerboxes using the plugin while moving
 
 #Messages
 prefix: '&b[&eBSB&b]' # String - Chat prefix, do not add a space or any other characters after it

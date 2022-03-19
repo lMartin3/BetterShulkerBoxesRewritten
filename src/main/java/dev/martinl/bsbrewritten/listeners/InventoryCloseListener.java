@@ -3,6 +3,7 @@ package dev.martinl.bsbrewritten.listeners;
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.manager.ShulkerOpenData;
 import dev.martinl.bsbrewritten.util.MaterialUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -59,6 +60,7 @@ public class InventoryCloseListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
+        if(instance.getConfigurationParser().isDisableMovementCheck()) return;
         if (e.getPlayer().getOpenInventory().getType() != InventoryType.SHULKER_BOX)
             return; //check if the open inventory is one from a shulker box
         if (e.getPlayer().getOpenInventory().getTopInventory().getLocation() != null)
