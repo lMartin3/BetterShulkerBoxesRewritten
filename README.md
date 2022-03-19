@@ -29,7 +29,7 @@ To see all the available translations, please go to the [translations folder](ht
 Available translations:
 - [English](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/en_us.yml)
 - [Spanish](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/es_es.yml)
-- [Simplified Chinese](https://github.com/Horizion-Server/BetterShulkerBoxesRewritten/blob/master/translations/zh_cn.yml) (by @YuanYuanOwO)
+- [Simplified Chinese](https://github.com/Horizion-Server/BetterShulkerBoxesRewritten/blob/master/translations/zh_cn.yml) (by [@YuanYuanOwO](https://github.com/YuanYuanOwO))
 
 ## Permissions
 | Permission                        | Description                                                                                                                                                                               |
