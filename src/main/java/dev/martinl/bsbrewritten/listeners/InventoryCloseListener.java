@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -105,6 +106,17 @@ public class InventoryCloseListener implements Listener {
         instance.getShulkerManager().closeShulkerBox(player, player.getOpenInventory().getTopInventory(), Optional.empty());
     }
 
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        Player player = e.getEntity();
+
+        if (player.getOpenInventory().getType() != InventoryType.SHULKER_BOX)
+            return; //check if the open inventory is one from a shulker box
+        if (player.getOpenInventory().getTopInventory().getLocation() != null) return; //check if the shulker is a block
+        if (!instance.getShulkerManager().doesPlayerHaveShulkerOpen(player.getUniqueId()))
+            return; //check if the inventory belongs to BSB
+        instance.getShulkerManager().closeShulkerBox(player, player.getOpenInventory().getTopInventory(), Optional.empty());
+    }
 
     /*
         This should prevent someone from trying to duplicate items by closing an inventory locally and then opening
