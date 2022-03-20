@@ -72,6 +72,7 @@ public class UpdateChecker {
             if(vulnerableVersions.contains(instance.getDescription().getVersion())) {
                 instance.getServer().getConsoleSender().sendMessage("VULNERABLE VERSION DETECTED!");
                 instance.setLockFeatures(true);
+                instance.getShulkerManager().closeAllInventories(false);
             }
         }, 20, 20*60*1);
     }

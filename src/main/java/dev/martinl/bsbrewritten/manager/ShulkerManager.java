@@ -32,7 +32,7 @@ public class ShulkerManager {
 
 
     public void openShulkerBoxInventory(Player player, ItemStack shulkerStack) {
-
+        if(instance.isLockFeatures()) return;
         //permission check
         if (instance.getConfigurationParser().isRequiresPermission()&&
                 !player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
