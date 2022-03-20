@@ -22,6 +22,7 @@ public class ConfigurationParser {
     private boolean enableInventoryClickOpen;
     private boolean enableStatistics;
     private boolean disableMovementCheck;
+    private boolean disableVulnerableVersionProtection;
 
     private String prefix;
     private String inventoryName;
@@ -42,6 +43,7 @@ public class ConfigurationParser {
         enableInventoryClickOpen = fileConfiguration.getBoolean("enable_inventory_click_open");
         enableStatistics = fileConfiguration.getBoolean("enable_statistics");
         disableMovementCheck = fileConfiguration.getBoolean("disable_movement_check");
+        disableVulnerableVersionProtection = fileConfiguration.getBoolean("disable_vulnerable_version_protection");
 
         prefix = translateCC(strFromConfig("prefix"));
         prefix = (prefix.isEmpty() ? "" : prefix + ChatColor.RESET + " ");

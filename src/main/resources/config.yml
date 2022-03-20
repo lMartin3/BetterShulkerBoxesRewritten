@@ -24,6 +24,14 @@ enable_right_click_open: true # Boolean - Set this to false if you do not want t
 enable_inventory_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by shift clicking in their inventories
 disable_movement_check: false # Boolean - Set this to true if you want players to be able to open shulkerboxes using the plugin while moving
 
+# With the vulnerable version protection enabled, Better Shulker Boxes will check if the current version is vulnerable to
+# duplication glitches or similar bugs, if so, it will automatically disable its features and send an alert message to
+# the server console and players with bettershulkerboxes.admin
+#
+# It is recommended to leave this on, it could prevent duplication glitches that would otherwise happen until you
+# update or remove the  plugin. If you want, you can still turn it off by setting the following field to true
+disable_vulnerable_version_protection: false
+
 #Messages
 prefix: '&b[&eBSB&b]' # String - Chat prefix, do not add a space or any other characters after it
 inventory_name: '< %shulker_name% >' # String - Text to be displayed as the inventory title, use %shulker_name% to display the item name

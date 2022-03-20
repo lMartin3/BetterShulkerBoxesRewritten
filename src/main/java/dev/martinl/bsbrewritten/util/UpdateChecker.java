@@ -20,6 +20,7 @@ public class UpdateChecker {
     private final int project;
     private URL checkURL;
     private URL changelogURL;
+    private URL vlnVersionListURL;
     private boolean newerVersionAvailable = false;
     private String newVersion;
     private ArrayList<String> latestChangelog = new ArrayList<>();
@@ -32,6 +33,7 @@ public class UpdateChecker {
         try {
             this.checkURL = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + projectID);
             this.changelogURL = new URL("https://raw.githubusercontent.com/lMartin3/BetterShulkerBoxesRewritten/master/changelog.txt");
+            this.vlnVersionListURL = new URL("https://raw.githubusercontent.com/lMartin3/BetterShulkerBoxesRewritten/master/vulnerable_versions.txt");
         } catch (MalformedURLException localMalformedURLException) {
             Bukkit.getServer().getConsoleSender().sendMessage("Error: MalformedURLException, please send this to the developer");
         }
@@ -62,11 +64,19 @@ public class UpdateChecker {
         }
     }
 
-    //GET request to a (raw) file on the github repo
     public ArrayList<String> getChangelog() {
+        return getStringListFromURL(changelogURL);
+    }
+
+    public ArrayList<String> getVulnerableVersionList() {
+        return getStringListFromURL(vlnVersionListURL);
+    }
+
+    //GET request to a (raw) file on the github repo
+    public ArrayList<String> getStringListFromURL(URL url) {
         ArrayList<String> lines = new ArrayList<>();
         try {
-            URLConnection con = this.changelogURL.openConnection();
+            URLConnection con = url.openConnection();
             InputStreamReader inSR = new InputStreamReader(con.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(inSR);
             String inputLine;
