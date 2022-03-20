@@ -2,7 +2,10 @@ package dev.martinl.bsbrewritten.listeners;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.BSBPermission;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -27,8 +30,8 @@ public class PlayerJoinListener implements Listener {
             e.getPlayer().sendMessage(ChatColor.RED +
                     "WARNING! You a re currently using a vulnerable version of Better Shulker Boxes!\n" +
                     "The plugin " + (instance.isLockFeatures() ? "disabled the features to prevent exploitation"
-                    : "did NOT disable anything because of the configuration\n"+
-                    ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + "Please update the plugin as soon as possible!"));
+                    : "did NOT disable anything because of the configuration"));
+            e.getPlayer().sendMessage(""+ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + "Please update the plugin as soon as possible!");
         }
     }
 }
