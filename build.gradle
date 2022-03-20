@@ -19,12 +19,13 @@ repositories {
             includeGroup 'org.spigotmc'
         }
     }
-    mavenLocal()
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
 }
 
 
 dependencies {
-    compileOnly 'org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal
+    compileOnly 'org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
