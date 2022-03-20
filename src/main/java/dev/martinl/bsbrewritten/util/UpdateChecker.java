@@ -26,6 +26,7 @@ public class UpdateChecker {
     private boolean newerVersionAvailable = false;
     private String newVersion;
     private ArrayList<String> latestChangelog = new ArrayList<>();
+    private boolean runningVulnerableVersion = false;
 
     public UpdateChecker(BSBRewritten instance, int projectID) {
         this.instance = instance;
@@ -65,16 +66,22 @@ public class UpdateChecker {
         }
     }
 
-    public void setupVulnerableVersionCheck() {
+    public void setupVulnerableVersionCheck(boolean disableOnDetection) {
         vlnVersionCheckTask = Bukkit.getScheduler().runTaskTimerAsynchronously(instance, ()->{
             instance.getServer().getConsoleSender().sendMessage("Checking...");
             List<String> vulnerableVersions = getVulnerableVersionList();
             if(vulnerableVersions.contains(instance.getDescription().getVersion())) {
-                instance.getServer().getConsoleSender().sendMessage("VULNERABLE VERSION DETECTED!");
+                instance.getServer().getConsoleSender().sendMessage(ChatColor.RED +
+                        "WARNING! You a re currently using a vulnerable version of Better Shulker Boxes!\n" +
+                        "The plugin " + (disableOnDetection ? "disabled the features to prevent exploitation"
+                        : "did NOT disable anything because of the configuration\n"+
+                        ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + "Please update the plugin as soon as possible!"));
+                runningVulnerableVersion = true;
                 instance.setLockFeatures(true);
                 instance.getShulkerManager().closeAllInventories(false);
+                vlnVersionCheckTask.cancel();
             }
-        }, 20, 20*60*1);
+        }, 20, 20*60*30);
     }
 
     public ArrayList<String> getChangelog() {

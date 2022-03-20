@@ -35,9 +35,8 @@ public class BSBRewritten extends JavaPlugin {
         new MainCommand(this);
 
         updateChecker = new UpdateChecker(this, 58837);
-        if(!configurationParser.isDisableVulnerableVersionProtection()) {
-            updateChecker.setupVulnerableVersionCheck();
-        }
+        updateChecker.setupVulnerableVersionCheck(!configurationParser.isDisableVulnerableVersionProtection());
+
 
         Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
             if (updateChecker.checkForUpdates()) {
