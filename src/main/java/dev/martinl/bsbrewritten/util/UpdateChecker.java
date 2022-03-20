@@ -68,12 +68,11 @@ public class UpdateChecker {
 
     public void setupVulnerableVersionCheck(boolean disableOnDetection) {
         vlnVersionCheckTask = Bukkit.getScheduler().runTaskTimerAsynchronously(instance, ()->{
-            instance.getServer().getConsoleSender().sendMessage("Checking...");
             List<String> vulnerableVersions = getVulnerableVersionList();
             if(vulnerableVersions.contains(instance.getDescription().getVersion())) {
                 instance.getServer().getConsoleSender().sendMessage(ChatColor.RED +
                         "WARNING! You a re currently using a vulnerable version of Better Shulker Boxes!\n" +
-                        "The plugin " + (disableOnDetection ? "disabled the features to prevent exploitation"
+                        "The plugin " + (instance.isLockFeatures() ? "disabled the features to prevent exploitation"
                         : "did NOT disable anything because of the configuration\n"+
                         ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + "Please update the plugin as soon as possible!"));
                 runningVulnerableVersion = true;
