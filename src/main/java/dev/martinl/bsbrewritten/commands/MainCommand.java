@@ -41,6 +41,13 @@ public class MainCommand implements CommandExecutor {
                 } else {
                     sender.sendMessage(ChatColor.YELLOW + "[BSB] " + ChatColor.GRAY + "You are running the latest version of BetterShulkerBoxes.");
                 }
+                if(instance.getUpdateChecker().isRunningVulnerableVersion()) {
+                    sender.sendMessage(ChatColor.RED +
+                            "WARNING! You a re currently using a vulnerable version of Better Shulker Boxes!\n" +
+                            "The plugin " + (instance.isLockFeatures() ? "disabled the features to prevent exploitation"
+                            : "did NOT disable anything because of the configuration"));
+                    sender.sendMessage(""+ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + "Please update the plugin as soon as possible!");
+                }
             });
         }
         return false;
