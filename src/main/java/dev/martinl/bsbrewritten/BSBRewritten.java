@@ -9,6 +9,7 @@ import dev.martinl.bsbrewritten.util.ConfigurationParser;
 import dev.martinl.bsbrewritten.util.Metrics;
 import dev.martinl.bsbrewritten.util.UpdateChecker;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +21,8 @@ public class BSBRewritten extends JavaPlugin {
     private ShulkerManager shulkerManager;
     private ConfigurationParser configurationParser;
     private UpdateChecker updateChecker;
+    @Setter
+    private boolean lockFeatures = false;
 
 
     @Override
@@ -32,6 +35,9 @@ public class BSBRewritten extends JavaPlugin {
         new MainCommand(this);
 
         updateChecker = new UpdateChecker(this, 58837);
+        if(!configurationParser.isDisableVulnerableVersionProtection()) {
+            updateChecker.setupVulnerableVersionCheck();
+        }
 
         Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
             if (updateChecker.checkForUpdates()) {

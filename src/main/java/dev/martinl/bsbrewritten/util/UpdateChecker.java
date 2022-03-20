@@ -4,6 +4,7 @@ import dev.martinl.bsbrewritten.BSBRewritten;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,10 +22,10 @@ public class UpdateChecker {
     private URL checkURL;
     private URL changelogURL;
     private URL vlnVersionListURL;
+    private BukkitTask vlnVersionCheckTask;
     private boolean newerVersionAvailable = false;
     private String newVersion;
     private ArrayList<String> latestChangelog = new ArrayList<>();
-
 
     public UpdateChecker(BSBRewritten instance, int projectID) {
         this.instance = instance;
@@ -62,6 +63,17 @@ public class UpdateChecker {
             instance.getServer().getConsoleSender().sendMessage(ioex.toString());
             return false;
         }
+    }
+
+    public void setupVulnerableVersionCheck() {
+        vlnVersionCheckTask = Bukkit.getScheduler().runTaskTimerAsynchronously(instance, ()->{
+            instance.getServer().getConsoleSender().sendMessage("Checking...");
+            List<String> vulnerableVersions = getVulnerableVersionList();
+            if(vulnerableVersions.contains(instance.getDescription().getVersion())) {
+                instance.getServer().getConsoleSender().sendMessage("VULNERABLE VERSION DETECTED!");
+                instance.setLockFeatures(true);
+            }
+        }, 20, 20*60*1);
     }
 
     public ArrayList<String> getChangelog() {
