@@ -31,9 +31,12 @@ public class ConfigurationParser {
 
 
     public void parseConfiguration() {
+        String openSoundName = fileConfiguration.getString("open_sound");
+        String closeSoundName = fileConfiguration.getString("close_sound");
+
         oldVersionField = fileConfiguration.getString("version");
-        openSound = Sound.valueOf(fileConfiguration.getString("open_sound"));
-        closeSound = Sound.valueOf(fileConfiguration.getString("close_sound"));
+        openSound = (openSoundName==null||openSoundName.isEmpty()) ? null : Sound.valueOf(openSoundName);
+        closeSound = (closeSoundName==null||closeSoundName.isEmpty()) ? null : Sound.valueOf(closeSoundName);
         cooldown = fileConfiguration.getInt("cooldown");
         requiresPermission = fileConfiguration.getBoolean("requires_permission");
         enableReadOnly = fileConfiguration.getBoolean("enable_read_only");
