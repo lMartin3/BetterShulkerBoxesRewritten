@@ -32,9 +32,9 @@ public class ShulkerManager {
 
 
     public void openShulkerBoxInventory(Player player, ItemStack shulkerStack) {
-
+        if (instance.isLockFeatures()) return;
         //permission check
-        if (instance.getConfigurationParser().isRequiresPermission()&&
+        if (instance.getConfigurationParser().isRequiresPermission() &&
                 !player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
             player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getNoPermissionMessage());
             return;
@@ -169,11 +169,11 @@ public class ShulkerManager {
 
     private void sendSoundAndMessage(Player player, ItemStack shulker, MessageSoundComb type) {
         ConfigurationParser cfgp = instance.getConfigurationParser();
-        String msgToSend = formatShulkerPlaceholder((type==MessageSoundComb.OPEN ? cfgp.getOpenMessage() : cfgp.getCloseMessage()), shulker);
+        String msgToSend = formatShulkerPlaceholder((type == MessageSoundComb.OPEN ? cfgp.getOpenMessage() : cfgp.getCloseMessage()), shulker);
         if (!msgToSend.isEmpty()) {
             player.sendMessage(instance.getConfigurationParser().getPrefix() + msgToSend);
         }
-        Sound toPlay = (type==MessageSoundComb.OPEN ? cfgp.getOpenSound() : cfgp.getCloseSound());
+        Sound toPlay = (type == MessageSoundComb.OPEN ? cfgp.getOpenSound() : cfgp.getCloseSound());
         if (toPlay != null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
     }
 

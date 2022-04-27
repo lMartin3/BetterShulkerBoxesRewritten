@@ -1,1 +1,2 @@
-Fixed duplication glitch (Issue #2 on GitHub)
+Fixed duplication glitch (Issue #7 on GitHub)
+Added option to disable movement checks (disable_movement_check)

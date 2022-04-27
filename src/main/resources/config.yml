@@ -11,7 +11,7 @@
 # Discord server: https://discord.com/invite/DnAHWMG
 
 #Please do not modify this
-config-version: 3.1.1
+config-version: 3.1.3
 
 # Open and close sounds, use sound names from this list https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
 open_sound: 'BLOCK_SHULKER_BOX_OPEN'
@@ -22,7 +22,13 @@ requires_permission: true # Boolean - Set this to false if you want to allow any
 enable_read_only: false # Boolean - Set this to true if you just want players to be able to preview a shulkerbox's contents
 enable_right_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by rightclicking
 enable_inventory_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by shift clicking in their inventories
+disable_movement_check: false # Boolean - Set this to true if you want players to be able to open shulkerboxes using the plugin while moving
 
+# With the vulnerable version protection enabled, Better Shulker Boxes will disable itself if it detects its
+# running a vulnerable version.
+# It is recommended to leave this on, it could prevent duplication glitches that would otherwise happen until you
+# update or remove the  plugin. If you want, you can still turn it off by setting the following field to true
+disable_vulnerable_version_protection: false
 
 #Messages
 prefix: '&b[&eBSB&b]' # String - Chat prefix, do not add a space or any other characters after it

@@ -18,11 +18,19 @@ For more information, please visit the [Spigot resource page](https://www.spigot
 2- Drop the JAR in your server's plugin folder<br>
 3- Restart your server<br>
 
-##Configuration
-You can tweak the plugin's settings in the config.yml file, it will be generated
+## Configuration
+Tweak the plugin's settings in the config.yml file, it will be generated
 once the plugin runs for the first time, and it should be located in /plugins/BetterShulkerBoxes.<br>
-You can go to [this link](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/src/main/resources/config.yml)
+Go to [this link](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/src/main/resources/config.yml)
 to see the default configuration settings, every option has an explanation of what it does.
+
+## Translations
+To see all the available translations, please go to the [translations folder](https://github.com/lMartin3/BetterShulkerBoxesRewritten/tree/master/translations). <br>
+Available translations:
+-  [English](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/en_us.yml)
+-  [Spanish](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/es_es.yml)
+-  [Simplified Chinese](https://github.com/Horizion-Server/BetterShulkerBoxesRewritten/blob/master/translations/zh_cn.yml) (by [@YuanYuanOwO](https://github.com/YuanYuanOwO))_
+-  [German](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/de_DE.yml) (by [@Hutch79](https://github.com/Hutch79))
 
 ## Permissions
 | Permission                        | Description                                                                                                                                                                               |
@@ -45,14 +53,22 @@ GitHub: [Issues page](https://github.com/lMartin3/BetterShulkerBoxesRewritten/is
 
 ## FAQ
 
+### How do I disable the shulker box messages?
+Set the open and close messages to empty quotes, like this:
+```yaml
+open_message: ''
+close_message: ''
+```
+
 ### I found a bug, what should I do?
-If you find a bug, please open an issue on GitHub or reach out to me via Discord or Spigot DM.
+If 
+find a bug, please open an issue on GitHub or reach out to me via Discord or Spigot DM.
 
 ### I have a feature suggestion
 Please open a GitHub issue or reach out to me.
 
 ### Can I submit a translation?
-Of course! Please contact me.
+Of course! Please open a pull request or contact me
 
 ### Where can I download the plugin from?
 Download it from the [Spigot resource page](https://www.spigotmc.org/resources/bsb-better-shulker-boxes-1-12-1-16.58837/),
