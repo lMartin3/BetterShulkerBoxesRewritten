@@ -14,6 +14,7 @@
 config-version: 3.1.3
 
 # Open and close sounds, use sound names from this list https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+# To disable sounds, put an empty string -> ''
 open_sound: 'BLOCK_SHULKER_BOX_OPEN'
 close_sound: 'BLOCK_SHULKER_BOX_CLOSE'
 
