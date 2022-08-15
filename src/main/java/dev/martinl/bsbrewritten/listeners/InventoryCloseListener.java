@@ -35,6 +35,7 @@ public class InventoryCloseListener implements Listener {
         if (!instance.getShulkerManager().isShulkerInventory(inventory))
             return; //check that the inventory belongs to BSB
         instance.getShulkerManager().closeShulkerBox(player, inventory, Optional.empty());
+        player.setItemOnCursor(null); //Workaround for Shulker box caught in cursor after opening with right click in inventory
     }
 
     //todo view-mode only
