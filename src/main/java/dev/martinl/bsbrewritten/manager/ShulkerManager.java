@@ -33,6 +33,11 @@ public class ShulkerManager {
 
     public void openShulkerBoxInventory(Player player, ItemStack shulkerStack) {
         if (instance.isLockFeatures()) return;
+
+        // prevent duplication glitch https://www.youtube.com/watch?v=RoyJ0A1kENA
+        // by preventing player to open shulker inventory without closing it first
+        if (openShulkerInventories.containsKey(player.getOpenInventory().getTopInventory())) return;
+
         //permission check
         if (instance.getConfigurationParser().isRequiresPermission() &&
                 !player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
