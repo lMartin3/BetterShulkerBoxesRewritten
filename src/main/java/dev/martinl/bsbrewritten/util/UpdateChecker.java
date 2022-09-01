@@ -75,10 +75,13 @@ public class UpdateChecker {
                         "The plugin " + (instance.isLockFeatures() ? "disabled the features to prevent exploitation"
                         : "did NOT disable anything because of the configuration\n" +
                         ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + "Please update the plugin as soon as possible!"));
+
                 runningVulnerableVersion = true;
-                instance.setLockFeatures(true);
-                instance.getShulkerManager().closeAllInventories(false);
                 vlnVersionCheckTask.cancel();
+                if(disableOnDetection) {
+                    instance.setLockFeatures(true);
+                    instance.getShulkerManager().closeAllInventories(false);
+                }
             }
         }, 20, 20 * 60 * 30);
     }
