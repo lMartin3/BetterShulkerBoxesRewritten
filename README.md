@@ -31,6 +31,7 @@ Available translations:
 -  [Spanish](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/es_es.yml)
 -  [Simplified Chinese](https://github.com/Horizion-Server/BetterShulkerBoxesRewritten/blob/master/translations/zh_cn.yml) (by [@YuanYuanOwO](https://github.com/YuanYuanOwO))_
 -  [German](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/de_DE.yml) (by [@Hutch79](https://github.com/Hutch79))
+-  [Italian](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/it_it.yml) (by [@iVillager](https://github.com/ivillager))
 
 ## Permissions
 | Permission                        | Description                                                                                                                                                                               |
