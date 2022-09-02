@@ -31,7 +31,7 @@ public class BSBRewritten extends JavaPlugin {
         shulkerManager = new ShulkerManager(this);
         configurationLoader = new ConfigurationLoader<>(this, "config.yml", new BSBConfig());
         configurationLoader.loadConfiguration();
-        updateConfig();
+        updateConfigVersion();
         new InteractListener(this);
         new InventoryCloseListener(this);
         new PlayerJoinListener(this);
@@ -73,10 +73,11 @@ public class BSBRewritten extends JavaPlugin {
         return this.getConfigurationLoader().getConfigData();
     }
 
-    public void updateConfig() {
-        if(Integer.parseInt(getBSBConfig().getConfigVersion().split("\\.")[0])<4) {
+    public void updateConfigVersion() {
+        if(configurationLoader.getConfigData().getConfigVersion().equals(getDescription().getVersion())) {
             configurationLoader.getConfigData().setConfigVersion(getDescription().getVersion());
             configurationLoader.saveConfiguration(); // Apply new config version
+
         }
     }
 
