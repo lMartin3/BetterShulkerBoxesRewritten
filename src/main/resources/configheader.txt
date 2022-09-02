@@ -10,3 +10,6 @@
 # GitHub repository: https://github.com/lMartin3/BetterShulkerBoxesRewritten
 # SpigotMC page: https://www.spigotmc.org/resources/bsb-better-shulker-boxes-1-12-1-16.58837/
 # Discord server: https://discord.com/invite/DnAHWMG
+#
+# !!! IMPORTANT !!! Do not change "disable_vulnerable_version_protection" unless you are 100% sure of what you're doing
+#
