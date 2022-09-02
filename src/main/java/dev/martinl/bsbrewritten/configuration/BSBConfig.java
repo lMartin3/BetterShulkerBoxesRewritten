@@ -1,6 +1,6 @@
 package dev.martinl.bsbrewritten.configuration;
 
-import dev.martinl.bsbrewritten.configuration.annotations.ColorString;
+import dev.martinl.bsbrewritten.configuration.types.ConfigMessage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,13 +24,12 @@ public class BSBConfig implements IDeepCloneable {
 
     private boolean disableVulnerableVersionProtection = false;
 
-    @ColorString
-    private String prefix = "&b[&eBSB&b] &r";
+    private ConfigMessage prefix = new ConfigMessage("&b[&eBSB&b] &r");
     private String inventoryName = "< %shulker_name% >";
-    private String openMessage = "open";
-    private String closeMessage = "close";
-    private String noPermissionMessage = "noperm";
-    private String cooldownMessage = "cooldown";
+    private ConfigMessage openMessage = new ConfigMessage("&7Opening shulkerbox (%shulker_name%)...");
+    private ConfigMessage closeMessage = new ConfigMessage("&7Closing shulkerbox (%shulker_name%)...");
+    private ConfigMessage noPermissionMessage = new ConfigMessage("&cNo permission");
+    private ConfigMessage cooldownMessage = new ConfigMessage("&cYou have to wait %minutes% minutes and %seconds% before using this again");
 
     private boolean enableStatistics = true;
 

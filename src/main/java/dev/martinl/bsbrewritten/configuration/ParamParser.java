@@ -1,6 +1,7 @@
 package dev.martinl.bsbrewritten.configuration;
 
 import dev.martinl.bsbrewritten.configuration.annotations.ColorString;
+import dev.martinl.bsbrewritten.configuration.types.ConfigMessage;
 import dev.martinl.bsbrewritten.util.GradientUtil;
 import org.bukkit.Bukkit;
 
@@ -23,7 +24,9 @@ public class ParamParser {
                 return GradientUtil.colorify((String) input);
             }
             return input;
-        }else if(yamlClasses.contains(targetFieldType)) {
+        } else if(targetFieldType.equals(ConfigMessage.class)) {
+            return new ConfigMessage((String) input);
+        } else if(yamlClasses.contains(targetFieldType)) {
             return input;
         }
 
@@ -34,6 +37,8 @@ public class ParamParser {
     public static Object serialize(Object input) {
         if(input.getClass().isEnum()) {
             return input.toString();
+        } else if(input instanceof ConfigMessage msg) {
+            return msg.getRaw();
         } else if(yamlClasses.contains(input.getClass())) {
             return input;
         }

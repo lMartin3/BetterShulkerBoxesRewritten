@@ -42,7 +42,7 @@ public class ShulkerManager {
         //permission check
         if (bsbConfig.isRequiresPermission() &&
                 !player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
-            player.sendMessage(bsbConfig.getPrefix() + bsbConfig.getNoPermissionMessage());
+            bsbConfig.getNoPermissionMessage().send(player);
             return;
 
         }
@@ -51,8 +51,7 @@ public class ShulkerManager {
         int cooldown = getPlayerCooldown(player.getUniqueId());
         if (cooldown > 0 && !player.hasPermission(BSBPermission.BYPASS_COOLDOWN.toString())) {
             int[] formatted = TimeUtils.formatToMinutesAndSeconds(cooldown);
-            player.sendMessage(bsbConfig.getPrefix() + bsbConfig.getCooldownMessage()
-                    .replace("%minutes%", String.valueOf(formatted[0])).replace("%seconds%", String.valueOf(formatted[1])));
+            bsbConfig.getCooldownMessage().send(player, "%minutes%", String.valueOf(formatted[0]), "%seconds%", String.valueOf(formatted[1]));
             return;
         }
 
@@ -158,13 +157,16 @@ public class ShulkerManager {
         return (int) Math.max(0, instance.getBSBConfig().getCooldown() - timePassed);
     }
 
+    private String getShulkerPlaceholderReplacement(ItemStack shulker) {
+        if (shulker == null) return "invalid";
+        if (shulker.getItemMeta() == null || !shulker.getItemMeta().hasDisplayName())
+            return InventoryType.SHULKER_BOX.getDefaultTitle();
+        return shulker.getItemMeta().getDisplayName();
+    }
     private String formatShulkerPlaceholder(String message, ItemStack shulker) {
         if (message.isEmpty()) return message;
         if (!message.contains("%shulker_name%")) return message;
-        if (shulker == null) return message.replace("%shulker_name%", "invalid");
-        if (shulker.getItemMeta() == null || !shulker.getItemMeta().hasDisplayName())
-            return message.replace("%shulker_name%", InventoryType.SHULKER_BOX.getDefaultTitle());
-        return message.replace("%shulker_name%", shulker.getItemMeta().getDisplayName());
+        return message.replace("%shulker_name%",getShulkerPlaceholderReplacement(shulker));
     }
 
     private enum MessageSoundComb {
@@ -175,10 +177,7 @@ public class ShulkerManager {
 
     private void sendSoundAndMessage(Player player, ItemStack shulker, MessageSoundComb type) {
         BSBConfig cfgp = instance.getBSBConfig();
-        String msgToSend = formatShulkerPlaceholder((type == MessageSoundComb.OPEN ? cfgp.getOpenMessage() : cfgp.getCloseMessage()), shulker);
-        if (!msgToSend.isEmpty()) {
-            player.sendMessage(instance.getBSBConfig().getPrefix() + msgToSend);
-        }
+        (type == MessageSoundComb.OPEN ? cfgp.getOpenMessage() : cfgp.getCloseMessage()).send(player, "%shulker_name%", getShulkerPlaceholderReplacement(shulker));
         Sound toPlay = (type == MessageSoundComb.OPEN ? cfgp.getOpenSound() : cfgp.getCloseSound());
         if (toPlay != null) player.playSound(player.getLocation(), toPlay, 1f, 1f);
     }

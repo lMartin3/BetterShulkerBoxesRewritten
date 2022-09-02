@@ -20,6 +20,7 @@ import java.io.File;
 
 @Getter
 public class BSBRewritten extends JavaPlugin {
+    private static BSBRewritten instance;
     private ShulkerManager shulkerManager;
     private ConfigurationParser configurationParser;
     private ConfigurationLoader<BSBConfig> configurationLoader;
@@ -30,6 +31,7 @@ public class BSBRewritten extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         shulkerManager = new ShulkerManager(this);
         loadAndParseConfig();
         configurationLoader = new ConfigurationLoader<>(this, "config2.yml", new BSBConfig());
@@ -96,6 +98,10 @@ public class BSBRewritten extends JavaPlugin {
 
     public int getServerVersion() {
         return Integer.parseInt(Bukkit.getServer().getBukkitVersion().split("-")[0].split("\\.")[1]);
+    }
+
+    public static BSBRewritten getInstance() {
+        return instance;
     }
 
 
