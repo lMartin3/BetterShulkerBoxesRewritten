@@ -1,8 +1,8 @@
 package dev.martinl.bsbrewritten.manager;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
+import dev.martinl.bsbrewritten.configuration.BSBConfig;
 import dev.martinl.bsbrewritten.util.BSBPermission;
-import dev.martinl.bsbrewritten.util.ConfigurationParser;
 import dev.martinl.bsbrewritten.util.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -173,7 +173,7 @@ public class ShulkerManager {
 
 
     private void sendSoundAndMessage(Player player, ItemStack shulker, MessageSoundComb type) {
-        ConfigurationParser cfgp = instance.getConfigurationParser();
+        BSBConfig cfgp = instance.getBSBConfig();
         String msgToSend = formatShulkerPlaceholder((type == MessageSoundComb.OPEN ? cfgp.getOpenMessage() : cfgp.getCloseMessage()), shulker);
         if (!msgToSend.isEmpty()) {
             player.sendMessage(instance.getConfigurationParser().getPrefix() + msgToSend);

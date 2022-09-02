@@ -1,7 +1,7 @@
 package dev.martinl.bsbrewritten;
 
 import dev.martinl.bsbrewritten.commands.MainCommand;
-import dev.martinl.bsbrewritten.configuration.ConfigurationData;
+import dev.martinl.bsbrewritten.configuration.BSBConfig;
 import dev.martinl.bsbrewritten.configuration.ConfigurationLoader;
 import dev.martinl.bsbrewritten.listeners.InteractListener;
 import dev.martinl.bsbrewritten.listeners.InventoryCloseListener;
@@ -22,7 +22,7 @@ import java.io.File;
 public class BSBRewritten extends JavaPlugin {
     private ShulkerManager shulkerManager;
     private ConfigurationParser configurationParser;
-    private ConfigurationLoader<ConfigurationData> configurationLoader;
+    private ConfigurationLoader<BSBConfig> configurationLoader;
     private UpdateChecker updateChecker;
     @Setter
     private boolean lockFeatures = false;
@@ -32,7 +32,7 @@ public class BSBRewritten extends JavaPlugin {
     public void onEnable() {
         shulkerManager = new ShulkerManager(this);
         loadAndParseConfig();
-        configurationLoader = new ConfigurationLoader<>(this, "config2.yml", new ConfigurationData());
+        configurationLoader = new ConfigurationLoader<>(this, "config2.yml", new BSBConfig());
         configurationLoader.loadConfiguration();
         new InteractListener(this);
         new InventoryCloseListener(this);
@@ -64,10 +64,15 @@ public class BSBRewritten extends JavaPlugin {
                 + ChatColor.AQUA + " loaded! (" + this.getServer().getVersion() + " | " + this.getServer().getBukkitVersion() + ") - Made by Rektb (lMartin3#1975)");
     }
 
+
     @Override
     public void onDisable() {
         shulkerManager.closeAllInventories(true);
         Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "BetterShulkerBoxes disabled");
+    }
+
+    public BSBConfig getBSBConfig() {
+        return this.getConfigurationLoader().getConfigData();
     }
 
     public void loadAndParseConfig() {
