@@ -28,8 +28,9 @@ public class MainCommand implements CommandExecutor {
         if (args.length == 0 || args[0].equalsIgnoreCase("help") || !sender.hasPermission(BSBPermission.ADMIN.toString())) {
             sendPluginInfo(sender);
         } else if (args[0].equalsIgnoreCase("reload")) {
-            instance.reloadConfig();
-            instance.loadAndParseConfig();
+            //instance.reloadConfig();
+            //instance.checkForOldConfig();
+            instance.getConfigurationLoader().loadConfiguration();
             sender.sendMessage(instance.getBSBConfig().getPrefix().get() + ChatColor.AQUA + "Configuration reloaded!");
         } else if (args[0].equalsIgnoreCase("check")) {
             Bukkit.getScheduler().runTaskAsynchronously(instance, () -> {

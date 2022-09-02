@@ -3,6 +3,7 @@ package dev.martinl.bsbrewritten.configuration;
 import dev.martinl.bsbrewritten.util.StringUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
@@ -29,8 +30,10 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
         }
         configFile = new File(plugin.getDataFolder(), configName);
         try {
-            if(!configFile.exists()) {
-                configFile.createNewFile();
+            if(configFile.exists()) {
+                bukkitPluginConfig = CustomYamlConfiguration.loadConfiguration(configFile);
+            } else {
+                bukkitPluginConfig = new CustomYamlConfiguration();
             }
             writeMissingConfigFields();
         } catch (IOException e) {
@@ -40,11 +43,12 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
     }
 
     public void writeMissingConfigFields() throws IOException {
-        bukkitPluginConfig = new CustomYamlConfiguration();
         for(Field field : defaultConfig.getClass().getDeclaredFields()) {
+            String yamlName = StringUtil.convertToSnakeCase(field.getName());
+            if(bukkitPluginConfig.isSet(yamlName)) continue;
             field.setAccessible(true);
             try {
-                bukkitPluginConfig.set(StringUtil.convertToSnakeCase(field.getName()), ParamParser.serialize(field.get(defaultConfig)));
+                bukkitPluginConfig.set(yamlName, ParamParser.serialize(field.get(defaultConfig)));
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -53,6 +57,8 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
     }
 
     public void saveConfiguration() {
+        Bukkit.getLogger().info("SAVE CONFIG CALL");
+        if(1+1==3) return;
         try {
             bukkitPluginConfig.save(configFile);
         } catch (IOException e) {

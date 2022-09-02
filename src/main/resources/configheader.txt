@@ -1,3 +1,4 @@
+# <HEADER>
 #  ___      _   _             ___ _        _ _             ___
 # | _ ) ___| |_| |_ ___ _ _  / __| |_ _  _| | |_____ _ _  | _ ) _____ _____ ___
 # | _ \/ -_)  _|  _/ -_) '_| \__ \ ' \ || | | / / -_) '_| | _ \/ _ \ \ / -_|_-<
@@ -12,4 +13,4 @@
 # Discord server: https://discord.com/invite/DnAHWMG
 #
 # !!! IMPORTANT !!! Do not change "disable_vulnerable_version_protection" unless you are 100% sure of what you're doing
-#
+# </HEADER>

@@ -7,7 +7,6 @@ import dev.martinl.bsbrewritten.listeners.InteractListener;
 import dev.martinl.bsbrewritten.listeners.InventoryCloseListener;
 import dev.martinl.bsbrewritten.listeners.PlayerJoinListener;
 import dev.martinl.bsbrewritten.manager.ShulkerManager;
-import dev.martinl.bsbrewritten.util.ConfigurationParser;
 import dev.martinl.bsbrewritten.util.Metrics;
 import dev.martinl.bsbrewritten.util.UpdateChecker;
 import lombok.Getter;
@@ -16,13 +15,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-
 @Getter
 public class BSBRewritten extends JavaPlugin {
     private static BSBRewritten instance;
     private ShulkerManager shulkerManager;
-    private ConfigurationParser configurationParser;
     private ConfigurationLoader<BSBConfig> configurationLoader;
     private UpdateChecker updateChecker;
     @Setter
@@ -33,16 +29,16 @@ public class BSBRewritten extends JavaPlugin {
     public void onEnable() {
         instance = this;
         shulkerManager = new ShulkerManager(this);
-        configurationLoader = new ConfigurationLoader<>(this, "config2.yml", new BSBConfig());
+        configurationLoader = new ConfigurationLoader<>(this, "config.yml", new BSBConfig());
         configurationLoader.loadConfiguration();
-        loadAndParseConfig();
+        updateConfig();
         new InteractListener(this);
         new InventoryCloseListener(this);
         new PlayerJoinListener(this);
         new MainCommand(this);
 
         updateChecker = new UpdateChecker(this, 58837);
-        updateChecker.setupVulnerableVersionCheck(!configurationParser.isDisableVulnerableVersionProtection());
+        updateChecker.setupVulnerableVersionCheck(!getBSBConfig().isDisableVulnerableVersionProtection());
 
 
         Bukkit.getScheduler().runTaskAsynchronously(this, () -> {
@@ -55,7 +51,7 @@ public class BSBRewritten extends JavaPlugin {
             }
         });
 
-        if (configurationParser.isEnableStatistics()) {
+        if (getBSBConfig().isEnableStatistics()) {
             new Metrics(this, 6076);
         } else {
             Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + "[BSB] Statistics have been disabled, please consider enabling them to help plugin development.");
@@ -77,22 +73,10 @@ public class BSBRewritten extends JavaPlugin {
         return this.getConfigurationLoader().getConfigData();
     }
 
-    public void loadAndParseConfig() {
-        saveDefaultConfig();
-        saveConfig();
-        configurationParser = new ConfigurationParser(this.getConfig());
-        configurationParser.parseConfiguration();
-        if (configurationParser.getOldVersionField() != null && !configurationParser.getOldVersionField().isEmpty()) {
-            File oldFile = new File(getDataFolder(), "config.yml");
-            if (!oldFile.exists()) {
-                return;
-            }
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[BSB] Old configuration detected! (" + configurationParser.getOldVersionField() + ") File will be renamed to config-old.yml and a new config file will be created.");
-            oldFile.renameTo(new File(getDataFolder(), "config-old.yml"));
-            reloadConfig();
-            saveDefaultConfig();
-            configurationParser = new ConfigurationParser(this.getConfig());
-            configurationParser.parseConfiguration();
+    public void updateConfig() {
+        if(Integer.parseInt(getBSBConfig().getConfigVersion().split("\\.")[0])<4) {
+            configurationLoader.getConfigData().setConfigVersion(getDescription().getVersion());
+            configurationLoader.saveConfiguration(); // Apply new config version
         }
     }
 
