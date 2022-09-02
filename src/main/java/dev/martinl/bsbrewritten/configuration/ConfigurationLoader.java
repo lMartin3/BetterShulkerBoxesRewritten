@@ -1,14 +1,17 @@
 package dev.martinl.bsbrewritten.configuration;
 
+import com.google.common.base.Charsets;
+import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.util.StringUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
+import java.util.Scanner;
 
 @RequiredArgsConstructor
 public class ConfigurationLoader<T extends IDeepCloneable> {
@@ -20,7 +23,7 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
     private T configData;
 
     private File configFile;
-    private CustomYamlConfiguration bukkitPluginConfig;
+    private YamlConfiguration bukkitPluginConfig;
 
     public void loadConfiguration() {
         configData = (T) defaultConfig.clone();
@@ -30,11 +33,16 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
         }
         configFile = new File(plugin.getDataFolder(), configName);
         try {
-            if(configFile.exists()) {
-                bukkitPluginConfig = CustomYamlConfiguration.loadConfiguration(configFile);
-            } else {
-                bukkitPluginConfig = new CustomYamlConfiguration();
+            if(!configFile.exists()) {
+                Writer writer = new OutputStreamWriter(new FileOutputStream(configFile), Charsets.UTF_8);
+                String text = new Scanner(BSBRewritten.getPlugin(BSBRewritten.class).getResource("configheader.txt"), "UTF-8").useDelimiter("\\A").next();
+                Bukkit.getConsoleSender().sendMessage(text);
+                writer.write(text);
+                writer.write("\n\n");
+                writer.flush();
+                writer.close();
             }
+            bukkitPluginConfig = YamlConfiguration.loadConfiguration(configFile);
             writeMissingConfigFields();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -67,7 +75,7 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
     }
 
     private void readConfiguration() {
-        bukkitPluginConfig = CustomYamlConfiguration.loadConfiguration(configFile);
+        bukkitPluginConfig = YamlConfiguration.loadConfiguration(configFile);
         for(Field field : configData.getClass().getDeclaredFields()) {
             field.setAccessible(true);
             try {
