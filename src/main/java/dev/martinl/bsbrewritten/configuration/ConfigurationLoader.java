@@ -57,7 +57,7 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
         bukkitPluginConfig = YamlConfiguration.loadConfiguration(configFile);
         for(Field field : configData.getClass().getFields()) {
             try {
-                Object value = ParamParser.deserialize(bukkitPluginConfig.get(StringUtil.convertToSnakeCase(field.getName())), field.getType());
+                Object value = ParamParser.deserialize(bukkitPluginConfig.get(StringUtil.convertToSnakeCase(field.getName())), field);
                 field.set(configData, value);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);

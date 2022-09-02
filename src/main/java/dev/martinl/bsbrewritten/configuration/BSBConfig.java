@@ -9,28 +9,28 @@ import org.bukkit.Sound;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BSBConfig implements IDeepCloneable {
-    public String configVersion = "unspecified";
-    public Sound openSound = Sound.BLOCK_SHULKER_BOX_OPEN;
-    public Sound closeSound = Sound.BLOCK_SHULKER_BOX_CLOSE;
+    protected String configVersion = "unspecified";
+    protected Sound openSound = Sound.BLOCK_SHULKER_BOX_OPEN;
+    protected Sound closeSound = Sound.BLOCK_SHULKER_BOX_CLOSE;
 
-    public int cooldown = 5000;
-    public boolean requiresPermission = true;
-    public boolean enableReadOnly = false;
-    public boolean enableRightClickOpen = true;
-    public boolean enableInventoryClickOpen = true;
-    public boolean disableMovementCheck = false;
+    protected int cooldown = 5000;
+    protected boolean requiresPermission = true;
+    protected boolean enableReadOnly = false;
+    protected boolean enableRightClickOpen = true;
+    protected boolean enableInventoryClickOpen = true;
+    protected boolean disableMovementCheck = false;
 
 
-    public boolean disableVulnerableVersionProtection = false;
+    protected boolean disableVulnerableVersionProtection = false;
 
-    public String prefix = "&b[&eBSB&b]";
-    public String inventoryName = "< %shulker_name% >";
-    public String openMessage = "open";
-    public String closeMessage = "close";
-    public String noPermissionMessage = "noperm";
-    public String cooldownMessage = "cooldown";
+    protected String prefix = "&b[&eBSB&b]";
+    protected String inventoryName = "< %shulker_name% >";
+    protected String openMessage = "open";
+    protected String closeMessage = "close";
+    protected String noPermissionMessage = "noperm";
+    protected String cooldownMessage = "cooldown";
 
-    public boolean enableStatistics = true;
+    protected boolean enableStatistics = true;
 
     @Override
     public IDeepCloneable clone() {

@@ -30,7 +30,7 @@ public class MainCommand implements CommandExecutor {
         } else if (args[0].equalsIgnoreCase("reload")) {
             instance.reloadConfig();
             instance.loadAndParseConfig();
-            sender.sendMessage(instance.getConfigurationParser().getPrefix() + ChatColor.AQUA + "Configuration reloaded!");
+            sender.sendMessage(instance.getBSBConfig().getPrefix() + ChatColor.AQUA + "Configuration reloaded!");
         } else if (args[0].equalsIgnoreCase("check")) {
             Bukkit.getScheduler().runTaskAsynchronously(instance, () -> {
                 instance.getUpdateChecker().checkForUpdates();
