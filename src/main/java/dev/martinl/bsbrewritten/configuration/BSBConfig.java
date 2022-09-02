@@ -1,5 +1,6 @@
 package dev.martinl.bsbrewritten.configuration;
 
+import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.configuration.types.ConfigMessage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import org.bukkit.Sound;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BSBConfig implements IDeepCloneable {
-    private String configVersion = "unspecified";
+    private String configVersion = BSBRewritten.getInstance().getDescription().getVersion();
     private Sound openSound = Sound.BLOCK_SHULKER_BOX_OPEN;
     private Sound closeSound = Sound.BLOCK_SHULKER_BOX_CLOSE;
 

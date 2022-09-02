@@ -52,6 +52,14 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
         bukkitPluginConfig.save(configFile);
     }
 
+    public void saveConfiguration() {
+        try {
+            bukkitPluginConfig.save(configFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void readConfiguration() {
         bukkitPluginConfig = CustomYamlConfiguration.loadConfiguration(configFile);
         for(Field field : configData.getClass().getDeclaredFields()) {

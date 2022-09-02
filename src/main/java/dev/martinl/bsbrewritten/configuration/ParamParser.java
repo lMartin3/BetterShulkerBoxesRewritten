@@ -15,7 +15,6 @@ public class ParamParser {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Object deserialize(Object input, Field targetField) {
         Class targetFieldType = targetField.getType();
-        Bukkit.getConsoleSender().sendMessage("Deserializing: " + targetFieldType.getName() + " | " + targetFieldType.isEnum());
         if(targetFieldType.isEnum()) {
             return Enum.valueOf(targetFieldType, (String) input);
         } else if(targetFieldType.equals(String.class)) {

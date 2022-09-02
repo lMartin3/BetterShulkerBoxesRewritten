@@ -30,7 +30,7 @@ public class MainCommand implements CommandExecutor {
         } else if (args[0].equalsIgnoreCase("reload")) {
             instance.reloadConfig();
             instance.loadAndParseConfig();
-            sender.sendMessage(instance.getBSBConfig().getPrefix() + ChatColor.AQUA + "Configuration reloaded!");
+            sender.sendMessage(instance.getBSBConfig().getPrefix().get() + ChatColor.AQUA + "Configuration reloaded!");
         } else if (args[0].equalsIgnoreCase("check")) {
             Bukkit.getScheduler().runTaskAsynchronously(instance, () -> {
                 instance.getUpdateChecker().checkForUpdates();
@@ -54,7 +54,7 @@ public class MainCommand implements CommandExecutor {
     }
 
     private void sendPluginInfo(CommandSender sender) {
-        String prefix = instance.getBSBConfig().getPrefix();
+        String prefix = instance.getBSBConfig().getPrefix().get();
         sender.sendMessage(prefix + ChatColor.AQUA + "This server is running " + ChatColor.YELLOW + "Better Shulker Boxes v" + instance.getDescription().getVersion() + ChatColor.AQUA + ".");
         if (sender.hasPermission(BSBPermission.ADMIN.toString())) {
             sender.sendMessage(prefix + ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/bsb reload" + ChatColor.GRAY + " to reload the configuration.");

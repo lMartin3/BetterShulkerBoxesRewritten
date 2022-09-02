@@ -33,9 +33,9 @@ public class BSBRewritten extends JavaPlugin {
     public void onEnable() {
         instance = this;
         shulkerManager = new ShulkerManager(this);
-        loadAndParseConfig();
         configurationLoader = new ConfigurationLoader<>(this, "config2.yml", new BSBConfig());
         configurationLoader.loadConfiguration();
+        loadAndParseConfig();
         new InteractListener(this);
         new InventoryCloseListener(this);
         new PlayerJoinListener(this);
