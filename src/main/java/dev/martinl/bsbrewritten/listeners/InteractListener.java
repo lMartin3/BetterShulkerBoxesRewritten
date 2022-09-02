@@ -24,7 +24,7 @@ public class InteractListener implements Listener {
 
     @EventHandler(ignoreCancelled = false)
     public void onInteract(PlayerInteractEvent e) {
-        if(!instance.getConfigurationParser().isEnableRightClickOpen()) return;
+        if(!instance.getBSBConfig().isEnableRightClickOpen()) return;
         if (e.getAction() != Action.RIGHT_CLICK_AIR) return;
         ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
         if (!MaterialUtil.isShulkerBox(is.getType())) return;
@@ -36,7 +36,7 @@ public class InteractListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onClick(InventoryClickEvent e) {
-        if(!instance.getConfigurationParser().isEnableInventoryClickOpen()) return;
+        if(!instance.getBSBConfig().isEnableInventoryClickOpen()) return;
         Player player = (Player) e.getWhoClicked();
         Inventory clickedInventory = e.getClickedInventory();
         if (e.getClick() != ClickType.RIGHT) return;

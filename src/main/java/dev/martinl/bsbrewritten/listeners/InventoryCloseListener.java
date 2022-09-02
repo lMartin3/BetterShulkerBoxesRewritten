@@ -60,7 +60,7 @@ public class InventoryCloseListener implements Listener {
 
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
-        if (instance.getConfigurationParser().isDisableMovementCheck()) return;
+        if (instance.getBSBConfig().isDisableMovementCheck()) return;
         if (e.getPlayer().getOpenInventory().getType() != InventoryType.SHULKER_BOX)
             return; //check if the open inventory is one from a shulker box
         if (e.getPlayer().getOpenInventory().getTopInventory().getLocation() != null)
@@ -149,7 +149,7 @@ public class InventoryCloseListener implements Listener {
 
         if (correspondingStack == null) return;
 
-        if (instance.getConfigurationParser().isEnableReadOnly()) {
+        if (instance.getBSBConfig().isEnableReadOnly()) {
             e.setCancelled(true);
         }
 

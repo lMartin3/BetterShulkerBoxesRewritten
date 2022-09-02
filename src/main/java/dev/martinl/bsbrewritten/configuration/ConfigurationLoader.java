@@ -3,8 +3,6 @@ package dev.martinl.bsbrewritten.configuration;
 import dev.martinl.bsbrewritten.util.StringUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
@@ -21,7 +19,7 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
     private T configData;
 
     private File configFile;
-    private FileConfiguration bukkitPluginConfig;
+    private CustomYamlConfiguration bukkitPluginConfig;
 
     public void loadConfiguration() {
         configData = (T) defaultConfig.clone();
@@ -42,8 +40,9 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
     }
 
     public void writeMissingConfigFields() throws IOException {
-        bukkitPluginConfig = new YamlConfiguration();
-        for(Field field : defaultConfig.getClass().getFields()) {
+        bukkitPluginConfig = new CustomYamlConfiguration();
+        for(Field field : defaultConfig.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
             try {
                 bukkitPluginConfig.set(StringUtil.convertToSnakeCase(field.getName()), ParamParser.serialize(field.get(defaultConfig)));
             } catch (IllegalAccessException e) {
@@ -54,8 +53,9 @@ public class ConfigurationLoader<T extends IDeepCloneable> {
     }
 
     private void readConfiguration() {
-        bukkitPluginConfig = YamlConfiguration.loadConfiguration(configFile);
-        for(Field field : configData.getClass().getFields()) {
+        bukkitPluginConfig = CustomYamlConfiguration.loadConfiguration(configFile);
+        for(Field field : configData.getClass().getDeclaredFields()) {
+            field.setAccessible(true);
             try {
                 Object value = ParamParser.deserialize(bukkitPluginConfig.get(StringUtil.convertToSnakeCase(field.getName())), field);
                 field.set(configData, value);

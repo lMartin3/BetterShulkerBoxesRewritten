@@ -33,15 +33,16 @@ public class ShulkerManager {
 
     public void openShulkerBoxInventory(Player player, ItemStack shulkerStack) {
         if (instance.isLockFeatures()) return;
+        BSBConfig bsbConfig = instance.getBSBConfig();
 
         // prevent duplication glitch https://www.youtube.com/watch?v=RoyJ0A1kENA
         // by preventing player to open shulker inventory without closing it first
         if (openShulkerInventories.containsKey(player.getOpenInventory().getTopInventory())) return;
 
         //permission check
-        if (instance.getConfigurationParser().isRequiresPermission() &&
+        if (bsbConfig.isRequiresPermission() &&
                 !player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
-            player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getNoPermissionMessage());
+            player.sendMessage(bsbConfig.getPrefix() + bsbConfig.getNoPermissionMessage());
             return;
 
         }
@@ -50,7 +51,7 @@ public class ShulkerManager {
         int cooldown = getPlayerCooldown(player.getUniqueId());
         if (cooldown > 0 && !player.hasPermission(BSBPermission.BYPASS_COOLDOWN.toString())) {
             int[] formatted = TimeUtils.formatToMinutesAndSeconds(cooldown);
-            player.sendMessage(instance.getConfigurationParser().getPrefix() + instance.getConfigurationParser().getCooldownMessage()
+            player.sendMessage(bsbConfig.getPrefix() + bsbConfig.getCooldownMessage()
                     .replace("%minutes%", String.valueOf(formatted[0])).replace("%seconds%", String.valueOf(formatted[1])));
             return;
         }
@@ -62,7 +63,7 @@ public class ShulkerManager {
         BlockStateMeta bsm = (BlockStateMeta) shulkerStack.getItemMeta();
         assert bsm != null;
         ShulkerBox shulker = (ShulkerBox) bsm.getBlockState();
-        Inventory inventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, formatShulkerPlaceholder(instance.getConfigurationParser().getInventoryName(), shulkerStack));
+        Inventory inventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, formatShulkerPlaceholder(bsbConfig.getInventoryName(), shulkerStack));
         inventory.setContents(shulker.getInventory().getContents());
         player.openInventory(inventory);
         ItemStack clone = shulkerStack.clone();
@@ -154,7 +155,7 @@ public class ShulkerManager {
     private int getPlayerCooldown(UUID uuid) {
         if (!lastOpened.containsKey(uuid)) return 0;
         long timePassed = System.currentTimeMillis() - lastOpened.getOrDefault(uuid, 0L);
-        return (int) Math.max(0, instance.getConfigurationParser().getCooldown() - timePassed);
+        return (int) Math.max(0, instance.getBSBConfig().getCooldown() - timePassed);
     }
 
     private String formatShulkerPlaceholder(String message, ItemStack shulker) {
@@ -176,7 +177,7 @@ public class ShulkerManager {
         BSBConfig cfgp = instance.getBSBConfig();
         String msgToSend = formatShulkerPlaceholder((type == MessageSoundComb.OPEN ? cfgp.getOpenMessage() : cfgp.getCloseMessage()), shulker);
         if (!msgToSend.isEmpty()) {
-            player.sendMessage(instance.getConfigurationParser().getPrefix() + msgToSend);
+            player.sendMessage(instance.getBSBConfig().getPrefix() + msgToSend);
         }
         Sound toPlay = (type == MessageSoundComb.OPEN ? cfgp.getOpenSound() : cfgp.getCloseSound());
         if (toPlay != null) player.playSound(player.getLocation(), toPlay, 1f, 1f);

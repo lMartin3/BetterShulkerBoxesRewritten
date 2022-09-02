@@ -54,7 +54,7 @@ public class MainCommand implements CommandExecutor {
     }
 
     private void sendPluginInfo(CommandSender sender) {
-        String prefix = instance.getConfigurationParser().getPrefix();
+        String prefix = instance.getBSBConfig().getPrefix();
         sender.sendMessage(prefix + ChatColor.AQUA + "This server is running " + ChatColor.YELLOW + "Better Shulker Boxes v" + instance.getDescription().getVersion() + ChatColor.AQUA + ".");
         if (sender.hasPermission(BSBPermission.ADMIN.toString())) {
             sender.sendMessage(prefix + ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/bsb reload" + ChatColor.GRAY + " to reload the configuration.");
