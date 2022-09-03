@@ -2,8 +2,10 @@ package dev.martinl.bsbrewritten.manager;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.configuration.BSBConfig;
+import dev.martinl.bsbrewritten.manager.chestsort.IChestSortManager;
 import dev.martinl.bsbrewritten.util.BSBPermission;
 import dev.martinl.bsbrewritten.util.TimeUtils;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -24,6 +26,19 @@ public class ShulkerManager {
     private final BSBRewritten instance;
     private HashMap<Inventory, ShulkerOpenData> openShulkerInventories = new HashMap<>();
     private HashMap<UUID, Long> lastOpened = new HashMap<>();
+
+    @Setter
+    private IChestSortManager chestSortManager = new IChestSortManager() {
+        @Override
+        public void sort(Player player, Inventory shulkerInventory) {
+
+        }
+
+        @Override
+        public void setSortable(Inventory shulkerInventory) {
+
+        }
+    };
 
 
     public ShulkerManager(BSBRewritten instance) {
@@ -64,6 +79,10 @@ public class ShulkerManager {
         ShulkerBox shulker = (ShulkerBox) bsm.getBlockState();
         Inventory inventory = Bukkit.createInventory(null, InventoryType.SHULKER_BOX, formatShulkerPlaceholder(bsbConfig.getInventoryName(), shulkerStack));
         inventory.setContents(shulker.getInventory().getContents());
+
+        // Apply sort
+        chestSortManager.sort(player, inventory);
+
         player.openInventory(inventory);
         ItemStack clone = shulkerStack.clone();
         openShulkerInventories.put(inventory, new ShulkerOpenData(clone, player.getLocation()));

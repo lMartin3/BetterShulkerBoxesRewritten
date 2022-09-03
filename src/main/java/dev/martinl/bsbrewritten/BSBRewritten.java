@@ -7,6 +7,7 @@ import dev.martinl.bsbrewritten.listeners.InteractListener;
 import dev.martinl.bsbrewritten.listeners.InventoryCloseListener;
 import dev.martinl.bsbrewritten.listeners.PlayerJoinListener;
 import dev.martinl.bsbrewritten.manager.ShulkerManager;
+import dev.martinl.bsbrewritten.manager.chestsort.ChestSortManagerImpl;
 import dev.martinl.bsbrewritten.util.Metrics;
 import dev.martinl.bsbrewritten.util.UpdateChecker;
 import lombok.Getter;
@@ -50,6 +51,16 @@ public class BSBRewritten extends JavaPlugin {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[BSB] " + ChatColor.GRAY + "You are running the latest BetterShulkerBoxes version.");
             }
         });
+
+        if(Bukkit.getPluginManager().getPlugin("ChestSort") != null) {
+            if(getBSBConfig().isEnableChestSortHook()) {
+                shulkerManager.setChestSortManager(new ChestSortManagerImpl());
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[BSB] BetterShulkerBoxes successfully hooked to ChestSort");
+            } else {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[BSB] BetterShulkerBoxes did not hook to ChestSort because it's disabled in the config file");
+            }
+
+        }
 
         if (getBSBConfig().isEnableStatistics()) {
             new Metrics(this, 6076);
