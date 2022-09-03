@@ -36,8 +36,8 @@ public class ParamParser {
     public static Object serialize(Object input) {
         if(input.getClass().isEnum()) {
             return input.toString();
-        } else if(input instanceof ConfigMessage msg) {
-            return msg.getRaw();
+        } else if(input instanceof ConfigMessage) {
+            return ((ConfigMessage) input).getRaw();
         } else if(yamlClasses.contains(input.getClass())) {
             return input;
         }

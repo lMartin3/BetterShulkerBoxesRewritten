@@ -1,5 +1,7 @@
 package dev.martinl.bsbrewritten.util;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -311,8 +313,13 @@ public final class GradientUtil {
             return this.gradients.get(0).colorAt(0);
         }
 
-        private record TwoStopGradient(Color startColor, Color endColor, float lowerRange, float upperRange) {
-
+        @Data
+        @AllArgsConstructor
+        private class TwoStopGradient {
+            Color startColor;
+            Color endColor;
+            float lowerRange;
+            float upperRange;
             /**
              * Gets the color of this gradient at the given step
              *
