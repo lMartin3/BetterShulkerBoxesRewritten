@@ -22,6 +22,8 @@ public class BSBConfig implements IDeepCloneable {
     private boolean enableInventoryClickOpen = true;
     private boolean disableMovementCheck = false;
 
+    private boolean enableChestSortHook = true;
+
 
     private boolean disableVulnerableVersionProtection = false;
 
@@ -46,6 +48,7 @@ public class BSBConfig implements IDeepCloneable {
                 enableRightClickOpen,
                 enableInventoryClickOpen,
                 disableMovementCheck,
+                enableChestSortHook,
                 disableVulnerableVersionProtection,
                 prefix,
                 inventoryName,
