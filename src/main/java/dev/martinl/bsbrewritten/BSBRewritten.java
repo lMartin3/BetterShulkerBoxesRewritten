@@ -9,7 +9,7 @@ import dev.martinl.bsbrewritten.listeners.PlayerJoinListener;
 import dev.martinl.bsbrewritten.manager.ShulkerManager;
 import dev.martinl.bsbrewritten.manager.chestsort.ChestSortManagerImpl;
 import dev.martinl.bsbrewritten.util.Metrics;
-import dev.martinl.bsbrewritten.util.UpdateChecker;
+import dev.martinl.bsbrewritten.updater.UpdateChecker;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;

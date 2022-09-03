@@ -1,4 +1,4 @@
-package dev.martinl.bsbrewritten.util;
+package dev.martinl.bsbrewritten.updater;
 
 import dev.martinl.bsbrewritten.BSBRewritten;
 import lombok.Getter;
