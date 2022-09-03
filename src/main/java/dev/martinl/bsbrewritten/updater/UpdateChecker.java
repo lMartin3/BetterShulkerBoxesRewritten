@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Getter
@@ -50,12 +51,30 @@ public class UpdateChecker {
         return this.instance.getDescription().getVersion();
     }
 
+    private int parseInt(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch(NumberFormatException ignore) {
+            return 0;
+        }
+    }
+
+    private boolean isNewVersion(String newVersion) {
+        if(this.instance.getDescription().getVersion().equals(newVersion)) return false;
+        Integer[] splitCurrent = Arrays.stream(instance.getDescription().getVersion().split("\\.")).map(this::parseInt).toArray(Integer[]::new);
+        Integer[] splitNew = Arrays.stream(newVersion.split("\\.")).map(this::parseInt).toArray(Integer[]::new);
+        for(int i=0;i<3;i++) {
+            if(!splitCurrent[i].equals(splitNew[i])) return splitCurrent[i] < splitNew[i];
+        }
+        return false;
+    }
+
     //GET request to a spigot api
     public boolean checkForUpdates() {
         try {
             URLConnection con = this.checkURL.openConnection();
             this.newVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            boolean result = !this.instance.getDescription().getVersion().equals(this.newVersion);
+            boolean result = isNewVersion(this.newVersion);
             newerVersionAvailable = result;
             getChangelog();
             return result;
