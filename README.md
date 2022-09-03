@@ -49,6 +49,16 @@ Available translations:
 | /bsb reload | Reload the configuration |
 | /bsb check  | Check for updates        |
 
+## Using hex colors, gradients, rainbows and more
+BetterShulkerBoxes supports regular color encodings (`& + letter`) as well as hex colors. These can be used
+with xml tags,
+
+| Pattern                                              | Tag                        | Example                                          |
+|------------------------------------------------------|----------------------------|--------------------------------------------------|
+| Fixed hex color                                      | `<#COLOR>`                 | `<#FF0000>This is red`                           |
+| Color gradient (2 hex values)<br/>(Currently broken) | `<g#STARTCOLOR:#ENDCOLOR>` | `<g#FF0000:#00FF00> this goes from red to green` |
+| Rainbow                                              | `\<r>`                     | `\<r>This is a rainbow `                         |
+| Stop pattern                                         | `\<r> or \<g> `            | `<#FFFFFF>This is white\<r> and this is not`     |
 ## Contact info
 Discord: [link to server](https://discord.gg/DnAHWMG) <br>
 SpigotMC Forums: [Rektb](https://www.spigotmc.org/members/rektb.384908/) <br>
