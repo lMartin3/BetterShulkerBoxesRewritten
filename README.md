@@ -33,6 +33,7 @@ Available translations:
 -  [German](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/de_DE.yml) (by [@Hutch79](https://github.com/Hutch79))
 -  [Italian](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/it_it.yml) (by [@iVillager](https://github.com/ivillager))
 -  [Bulgarian](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/bu_bu.yml) (by [@ItzLazerX](https://github.com/ItzLazerX))
+-  [French](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/fr_fr.yml) (by MrQuentin#0309)
 
 ## Permissions
 | Permission                        | Description                                                                                                                                                                               |
