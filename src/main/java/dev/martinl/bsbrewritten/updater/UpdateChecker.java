@@ -83,7 +83,7 @@ public class UpdateChecker {
                     instance.getShulkerManager().closeAllInventories(false);
                 }
             }
-        }, 20, 20 * 60 * 30);
+        }, 20, 20 * 60 * 10);
     }
 
     public ArrayList<String> getChangelog() {
