@@ -1,0 +1,7 @@
+# Messages
+prefix: '&b[&eBSB&b]' # Prefix v chatu. Nedávej za něj žádné mezery nebo jiné znaky.
+inventory_name: '< %shulker_name% >' # String - Text který bude napsán při otevřeném shulkeru, použij %shulker_name% pro zobrazení jména shulkeru.
+open_message: '&7Otevírání shulkeru (%shulker_name%)...' #String - Zpráva zobrazovaná při otevírání shulkeru, použij %shulker_name% pro zobrazení jeho názvu, ponechej prázdné pro vypnutí zprávy
+close_message: '&7Zavírání shulkeru (%shulker_name%)...' #String - Zpráva zobrazovaná při zavírání shulkeru, použij %shulker_name% pro zobrazení jeho názvu, ponechej prázdné pro vypnutí zprávy
+no_permission_message: '&cNedostatečná oprávnění' # String - Zpráva, která bude odeslána, pokud hráč nemá právo na použití některých funkcí pluginu
+cooldown_message: '&cVyčkej ještě %minutes% minut a %seconds% sekund před otevřením shulkeru' # - String - Zpráva, která bude poslána hráčům s cooldownem, použij %minutes% a %seconds% pro zobrazení času
