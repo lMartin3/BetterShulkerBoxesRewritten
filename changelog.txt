@@ -1,2 +1,5 @@
-Fixed duplication glitch (Issue #7 on GitHub)
-Added option to disable movement checks (disable_movement_check)
+* * * Please update as soon as possible! * * *
+Fixed duplication glitch (PR #33)
+Added support for chestsort, automatic inventory sorting plugin
+Added support for hex colors, check the github page
+Refactored configuration system, it now generates missing fields
