@@ -89,18 +89,18 @@ public class UpdateChecker {
         vlnVersionCheckTask = Bukkit.getScheduler().runTaskTimerAsynchronously(instance, () -> {
             List<String> vulnerableVersions = getVulnerableVersionList();
             if (vulnerableVersions.contains(instance.getDescription().getVersion())) {
-                instance.getServer().getConsoleSender().sendMessage(ChatColor.RED +
-                        "WARNING! You a re currently using a vulnerable version of Better Shulker Boxes!\n" +
-                        "The plugin " + (instance.isLockFeatures() ? "disabled the features to prevent exploitation"
-                        : "did NOT disable anything because of the configuration\n" +
-                        ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + "Please update the plugin as soon as possible!"));
-
                 runningVulnerableVersion = true;
                 vlnVersionCheckTask.cancel();
                 if(disableOnDetection) {
                     instance.setLockFeatures(true);
                     instance.getShulkerManager().closeAllInventories(false);
                 }
+                instance.getServer().getConsoleSender().sendMessage(ChatColor.RED +
+                        "WARNING! You a re currently using a vulnerable version of Better Shulker Boxes!\n" +
+                        "The plugin " + (instance.isLockFeatures() ? "disabled the features to prevent exploitation"
+                        : "did NOT disable anything because of the configuration\n" +
+                        ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + "Please update the plugin as soon as possible!"));
+
             }
         }, 20, 20 * 60 * 10);
     }
