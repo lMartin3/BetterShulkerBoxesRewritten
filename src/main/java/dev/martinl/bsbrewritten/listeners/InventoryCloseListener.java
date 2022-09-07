@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -161,4 +162,20 @@ public class InventoryCloseListener implements Listener {
             e.setCancelled(true);
         }
     }
+
+    /*
+     * This should prevent players from placing a BSB shulker while having a BSB shulker open
+     * */
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e){
+        Player player = e.getPlayer();
+
+        if (player.getOpenInventory().getType() != InventoryType.SHULKER_BOX)
+            return; //check if the open inventory is one from a shulker box
+        if (player.getOpenInventory().getTopInventory().getLocation() != null) return; //check if the shulker is a block
+        if (!instance.getShulkerManager().doesPlayerHaveShulkerOpen(player.getUniqueId()))
+            return; //check if the inventory belongs to BSB
+        e.setCancelled(true);
+    }
+
 }
