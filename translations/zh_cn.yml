@@ -1,7 +1,7 @@
 #Messages
 prefix: '&b[&eBSB&b]' # String - Chat prefix, do not add a space or any other characters after it
-inventory_name: '< %shulker_name% >' # String - Text to be displayed as the inventory title, use %shulker_name% to display the item name
-open_message: '&7打开潜影盒中 (%shulker_name%)...' #String - Message to be sent to a player when they open a shulker box, use %shulker_name% to display the item name, leave empty to disable
-close_message: '&7关闭潜影盒中 (%shulker_name%)...' #String - Message to be sent to a player when they close a shulker box, use %shulker_name% to display the item name, leave empty to disable
+inventory_name: '< %shulker_name% &r>' # String - Text to be displayed as the inventory title, use %shulker_name% to display the item name
+open_message: '&7打开潜影盒中 (%shulker_name%&r)...' #String - Message to be sent to a player when they open a shulker box, use %shulker_name% to display the item name, leave empty to disable
+close_message: '&7关闭潜影盒中 (%shulker_name%&r)...' #String - Message to be sent to a player when they close a shulker box, use %shulker_name% to display the item name, leave empty to disable
 no_permission_message: '&c你没有权限' # String - Message to be sent to players who don't have permissions to use certain features of the plugin
 cooldown_message: '&c你必须等待 %minutes%分%seconds%秒 后才能再次使用这个。' # - String - Message to be sent to players who have to wait for the cooldown, use %minutes% and %seconds% to display the time remaining
