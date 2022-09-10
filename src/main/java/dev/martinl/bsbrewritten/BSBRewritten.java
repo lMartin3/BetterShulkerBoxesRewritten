@@ -8,6 +8,8 @@ import dev.martinl.bsbrewritten.listeners.InventoryCloseListener;
 import dev.martinl.bsbrewritten.listeners.PlayerJoinListener;
 import dev.martinl.bsbrewritten.manager.ShulkerManager;
 import dev.martinl.bsbrewritten.manager.chestsort.ChestSortManagerImpl;
+import dev.martinl.bsbrewritten.manager.worldguard.IWorldGuardManager;
+import dev.martinl.bsbrewritten.manager.worldguard.WorldGuardManagerImpl;
 import dev.martinl.bsbrewritten.updater.UpdateChecker;
 import dev.martinl.bsbrewritten.util.Metrics;
 import lombok.Getter;
@@ -19,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public class BSBRewritten extends JavaPlugin {
     private static BSBRewritten instance;
+    private static IWorldGuardManager worldGuardManager;
     private ShulkerManager shulkerManager;
     private ConfigurationLoader<BSBConfig> configurationLoader;
     private UpdateChecker updateChecker;
@@ -62,6 +65,18 @@ public class BSBRewritten extends JavaPlugin {
 
         }
 
+        if(Bukkit.getPluginManager().getPlugin("WorldGuard") != null) {
+            if(getBSBConfig().isEnableWorldGuardHook()) {
+                worldGuardManager = new WorldGuardManagerImpl();
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "[BSB] BetterShulkerBoxes successfully hooked" +
+                                                              " to WorldGuard");
+            } else {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "[BSB] BetterShulkerBoxes did not hook to " +
+                                                              "WorldGuard" +
+                                                              " because it's disabled in the config file");
+            }
+        }
+
         if (getBSBConfig().isEnableStatistics()) {
             new Metrics(this, 6076);
         } else {
@@ -99,6 +114,8 @@ public class BSBRewritten extends JavaPlugin {
     public static BSBRewritten getInstance() {
         return instance;
     }
+
+    public static IWorldGuardManager getWorldGuardManager() { return worldGuardManager; }
 
 
 }

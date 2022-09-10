@@ -7,7 +7,7 @@ commands:
   bsb:
     description: 'Main BetterShulkerBoxes command'
 
-softdepend: [ChestSort]
+softdepend: [ChestSort, WorldGuard]
 
 permissions:
   bettershulkerboxes.*:

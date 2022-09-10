@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bukkit.Sound;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +25,9 @@ public class BSBConfig implements IDeepCloneable {
     private boolean disableMovementCheck = false;
 
     private boolean enableChestSortHook = true;
-
+    private boolean enableWorldGuardHook = true;
+    private boolean blacklistRegions = true;
+    private List<String> regionList = List.of("region1");
 
     private boolean disableVulnerableVersionProtection = false;
 
@@ -49,6 +53,9 @@ public class BSBConfig implements IDeepCloneable {
                 enableInventoryClickOpen,
                 disableMovementCheck,
                 enableChestSortHook,
+                enableWorldGuardHook,
+                blacklistRegions,
+                regionList,
                 disableVulnerableVersionProtection,
                 prefix,
                 inventoryName,
