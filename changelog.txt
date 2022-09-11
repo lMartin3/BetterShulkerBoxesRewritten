@@ -1,2 +1,4 @@
-* * * Please update as soon as possible! * * *
+IMPORTANT NOTICE: Better Shulker Boxes >=4.1.0 requires Java 17 or higher!
+Added World Guard hook, you can now set a list regions to act as a whitelist or blacklist (thanks to @KaspianDev on GitHub)
 Fixed issue where cooldown message would sometimes crash the server
+Players can now open a shulkerbox from their inventory even if they have another one open
