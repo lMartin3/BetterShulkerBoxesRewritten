@@ -26,6 +26,10 @@ enable_right_click_open: true # Boolean - Set this to false if you do not want t
 enable_inventory_click_open: true # Boolean - Set this to false if you do not want to allow players to open a shulker by shift clicking in their inventories
 disable_movement_check: false # Boolean - Set this to true if you want players to be able to open shulkerboxes using the plugin while moving
 enable_chest_sort_hook: true # Boolean - Set this to true if you want BSB to hook with ChestSort (Inventory sorting plugin)
+enable_worldguard_hook: true # Boolean - Set this to true to enable WorldGuard hook
+blacklist-regions: true # Boolean - Set this to false if you want shulkers to work in certain regions, true if you want to block them in certain regions
+region-list:
+  - "region1"
 
 # With the vulnerable version protection enabled, Better Shulker Boxes will disable itself if it detects its
 # running a vulnerable version.

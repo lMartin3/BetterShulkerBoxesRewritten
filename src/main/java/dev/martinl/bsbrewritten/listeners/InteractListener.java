@@ -22,13 +22,22 @@ public class InteractListener implements Listener {
         instance.getServer().getPluginManager().registerEvents(this, instance);
     }
 
-    @EventHandler(ignoreCancelled = false)
+    @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         if(!instance.getBSBConfig().isEnableRightClickOpen()) return;
         if (e.getAction() != Action.RIGHT_CLICK_AIR) return;
         ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
         if (!MaterialUtil.isShulkerBox(is.getType())) return;
         //todo permissions, cooldown, worldguard area perms, etc
+        if (BSBRewritten.getWorldGuardManager() != null) {
+            for (String regionID : instance.getBSBConfig().getRegionList()) {
+                if (instance.getBSBConfig().isBlacklistRegions()) {
+                    if (BSBRewritten.getWorldGuardManager().isInRegion(e.getPlayer(), regionID)) return;
+                } else {
+                    if (!BSBRewritten.getWorldGuardManager().isInRegion(e.getPlayer(), regionID)) return;
+                }
+            }
+        }
         BlockStateMeta bsm = (BlockStateMeta) is.getItemMeta();
         assert bsm != null;
         instance.getShulkerManager().openShulkerBoxInventory(e.getPlayer(), is);

@@ -20,6 +20,7 @@ repositories {
     }
     maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
     maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+    maven { url 'https://maven.enginehub.org/repo/' } // WorldGuard
     maven { url = 'https://hub.jeff-media.com/nexus/repository/jeff-media-public/' } // ChestSortAPI
 }
 
@@ -27,6 +28,7 @@ repositories {
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal
     compileOnly 'de.jeff_media:ChestSortAPI:13.0.0-SNAPSHOT' // ChestSortAPI
+    compileOnly 'com.sk89q.worldguard:worldguard-bukkit:7.1.0-SNAPSHOT' // WorldGuard Bukkit
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
@@ -38,7 +40,7 @@ dependencies {
 }
 
 
-def targetJavaVersion = 11
+def targetJavaVersion = 17
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
