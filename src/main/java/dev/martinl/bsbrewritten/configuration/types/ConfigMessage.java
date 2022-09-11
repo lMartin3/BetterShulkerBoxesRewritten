@@ -27,7 +27,7 @@ public class ConfigMessage {
     public static void send(CommandSender sender, ConfigMessage message, boolean prefix, String... placeholders) {
         if(message==null||message.getRaw()==null||message.getRaw().isEmpty()) return;
         String content = message.getRaw();
-        for(int i=0;i+1<placeholders.length;i=2) {
+        for(int i=0;i+1<placeholders.length;i+=2) {
             content = content.replace(placeholders[i], placeholders[i+1]);
         }
         sender.sendMessage((prefix ? BSBRewritten.getInstance().getBSBConfig().getPrefix().get() : "") + GradientUtil.colorify(content));
