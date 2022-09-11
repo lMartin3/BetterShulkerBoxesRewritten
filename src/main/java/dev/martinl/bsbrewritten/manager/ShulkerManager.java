@@ -50,10 +50,6 @@ public class ShulkerManager {
         if (instance.isLockFeatures()) return;
         BSBConfig bsbConfig = instance.getBSBConfig();
 
-        // prevent duplication glitch https://www.youtube.com/watch?v=RoyJ0A1kENA
-        // by preventing player to open shulker inventory without closing it first
-        if (openShulkerInventories.containsKey(player.getOpenInventory().getTopInventory())) return;
-
         //permission check
         if (bsbConfig.isRequiresPermission() &&
                 !player.hasPermission(BSBPermission.OPEN_SHULKER.toString())) {
@@ -69,6 +65,14 @@ public class ShulkerManager {
             bsbConfig.getCooldownMessage().send(player, "%minutes%", String.valueOf(formatted[0]), "%seconds%", String.valueOf(formatted[1]));
             return;
         }
+
+
+        // close the player's current inventory if they have one open
+        if (player.getOpenInventory().getTopInventory().getType() != InventoryType.CRAFTING||
+                openShulkerInventories.containsKey(player.getOpenInventory().getTopInventory())) {
+            player.closeInventory();
+        };
+
 
         // Check end
 
@@ -170,7 +174,7 @@ public class ShulkerManager {
 
     }
 
-    private int getPlayerCooldown(UUID uuid) {
+    public int getPlayerCooldown(UUID uuid) {
         if (!lastOpened.containsKey(uuid)) return 0;
         long timePassed = System.currentTimeMillis() - lastOpened.getOrDefault(uuid, 0L);
         return (int) Math.max(0, instance.getBSBConfig().getCooldown() - timePassed);
