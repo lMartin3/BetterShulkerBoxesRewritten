@@ -29,13 +29,13 @@ To see all the available translations, please go to the [translations folder](ht
 Available translations:
 -  [English](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/en_us.yml)
 -  [Spanish](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/es_es.yml)
--  [Simplified Chinese](https://github.com/Horizion-Server/BetterShulkerBoxesRewritten/blob/master/translations/zh_cn.yml) (by [@YuanYuanOwO](https://github.com/YuanYuanOwO))_
+-  [Simplified Chinese](https://github.com/Horizion-Server/BetterShulkerBoxesRewritten/blob/master/translations/zh_cn.yml) (by [@YuanYuanOwO](https://github.com/YuanYuanOwO))
+-  [Traditional Chinese](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/zh_tw.yml) (by [@jack444410](https://github.com/jack444410))
 -  [German](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/de_DE.yml) (by [@Hutch79](https://github.com/Hutch79))
 -  [Italian](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/it_it.yml) (by [@iVillager](https://github.com/ivillager))
 -  [Bulgarian](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/bu_bu.yml) (by [@ItzLazerX](https://github.com/ItzLazerX))
 -  [French](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/fr_fr.yml) (by MrQuentin#0309)
 -  [Czech](https://github.com/lMartin3/BetterShulkerBoxesRewritten/blob/master/translations/cz_cz.yml) (by [lOlkOmOx](https://github.com/lOlkOmOx))
-
 ## Permissions
 | Permission                        | Description                                                                                                                                                                               |
 |-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
