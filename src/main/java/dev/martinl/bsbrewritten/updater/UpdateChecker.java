@@ -129,8 +129,9 @@ public class UpdateChecker {
             latestChangelog = lines;
             return lines;
         } catch (IOException ioex) {
-            instance.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Error! BSB could not retrieve the changelog:");
-            instance.getServer().getConsoleSender().sendMessage(ioex.toString());
+            // This error flooded my console = =
+//            instance.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Error! BSB could not retrieve the changelog:");
+//            instance.getServer().getConsoleSender().sendMessage(ioex.toString());
             latestChangelog = lines;
             return lines;
         }
