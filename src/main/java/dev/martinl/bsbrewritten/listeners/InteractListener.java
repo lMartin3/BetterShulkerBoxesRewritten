@@ -27,6 +27,7 @@ public class InteractListener implements Listener {
         if(!instance.getBSBConfig().isEnableRightClickOpen()) return;
         if (e.getAction() != Action.RIGHT_CLICK_AIR) return;
         ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
+        if(is.getAmount() != 1) return; // Do not open if stacked: compatible stacking plugin
         if (!MaterialUtil.isShulkerBox(is.getType())) return;
         //todo permissions, cooldown, worldguard area perms, etc
         if (BSBRewritten.getWorldGuardManager() != null) {
@@ -55,6 +56,7 @@ public class InteractListener implements Listener {
         }
 
         ItemStack clicked = e.getCurrentItem();
+        if(clicked.getAmount() != 1) return; // Do not open if stacked: compatible stacking plugin
         boolean isShulker = clicked!=null && MaterialUtil.isShulkerBox(clicked.getType());
         if (player.getOpenInventory().getTopInventory().getType() != InventoryType.CRAFTING) {
             if(!isShulker) {
