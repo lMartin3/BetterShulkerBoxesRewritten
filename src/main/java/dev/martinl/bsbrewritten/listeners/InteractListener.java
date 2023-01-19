@@ -56,7 +56,7 @@ public class InteractListener implements Listener {
         }
 
         ItemStack clicked = e.getCurrentItem();
-        if(clicked.getAmount() != 1) return; // Do not open if stacked: compatible stacking plugin
+        if(clicked != null && clicked.getAmount() != 1) return; // Do not open if stacked: compatible stacking plugin
         boolean isShulker = clicked!=null && MaterialUtil.isShulkerBox(clicked.getType());
         if (player.getOpenInventory().getTopInventory().getType() != InventoryType.CRAFTING) {
             if(!isShulker) {
