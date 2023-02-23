@@ -46,7 +46,7 @@ public class ShulkerManager {
     }
 
 
-    public void openShulkerBoxInventory(Player player, ItemStack shulkerStack) {
+    public void openShulkerBoxInventory(Player player, ItemStack shulkerStack, SlotType slotType, int rawSlot) {
         if (instance.isLockFeatures()) return;
         BSBConfig bsbConfig = instance.getBSBConfig();
 
@@ -89,7 +89,7 @@ public class ShulkerManager {
 
         player.openInventory(inventory);
         ItemStack clone = shulkerStack.clone();
-        openShulkerInventories.put(inventory, new ShulkerOpenData(clone, player.getLocation()));
+        openShulkerInventories.put(inventory, new ShulkerOpenData(clone, player.getLocation(), slotType, rawSlot));
 
         sendSoundAndMessage(player, shulkerStack, MessageSoundComb.OPEN);
     }
@@ -97,25 +97,41 @@ public class ShulkerManager {
     public ItemStack closeShulkerBox(Player player, Inventory inventory, Optional<ItemStack> useStack) {
         player.getOpenInventory().getTopInventory();
         if (!openShulkerInventories.containsKey(inventory)) return null;
+        ShulkerOpenData shulkerOpenData = openShulkerInventories.remove(inventory);
 
-        ItemStack stackClone = openShulkerInventories.get(inventory).getItemStack();
+        ItemStack stackClone = shulkerOpenData.getItemStack();
         if (useStack.isPresent()) {
             stackClone = useStack.get();
         }
 
-        openShulkerInventories.remove(inventory);
         if (player.getOpenInventory().getTopInventory().getType() == InventoryType.SHULKER_BOX) {
             player.closeInventory();
         }
 
-
         ItemStack targetItem = stackClone;
         boolean found = false;
-        for (ItemStack is : player.getInventory().getContents()) {
-            if (is != null && is.equals(stackClone)) {
-                found = true;
+        if (shulkerOpenData.getSlotType() == SlotType.HOTBAR) {
+            ItemStack is = player.getInventory().getItemInMainHand();
+            if (is.equals(stackClone)) {
                 targetItem = is;
-                break;
+                found = true;
+            }
+        } else if (shulkerOpenData.getSlotType() == SlotType.INVENTORY) {
+            ItemStack is = player.getInventory().getItem(shulkerOpenData.getRawSlot());
+            if (is != null && is.equals(stackClone)) {
+                targetItem = is;
+                found = true;
+            }
+        }
+
+        //Keep as fallback
+        if (!found) {
+            for (ItemStack is : player.getInventory().getContents()) {
+                if (is != null && is.equals(stackClone)) {
+                    found = true;
+                    targetItem = is;
+                    break;
+                }
             }
         }
         if (!found) {
@@ -127,6 +143,7 @@ public class ShulkerManager {
         shulker.getInventory().setContents(inventory.getContents());
         cMeta.setBlockState(shulker);
         targetItem.setItemMeta(cMeta);
+        player.updateInventory();
         sendSoundAndMessage(player, targetItem, MessageSoundComb.CLOSE);
         return targetItem;
     }

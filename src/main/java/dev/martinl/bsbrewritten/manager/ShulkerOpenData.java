@@ -10,4 +10,6 @@ import org.bukkit.inventory.ItemStack;
 public class ShulkerOpenData {
     private final ItemStack itemStack;
     private final Location openLocation;
+    private final SlotType slotType;
+    private final int rawSlot;
 }
