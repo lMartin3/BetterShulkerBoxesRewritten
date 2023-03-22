@@ -66,6 +66,10 @@ public class ShulkerManager {
             return;
         }
 
+        // Cursor item is not keept when opening a new inventory, keep it manually.
+        ItemStack cursorItem = player.getItemOnCursor();
+        // It is "keept" when closing your inventory, but not in your cursor, make sure it's not duplicated.
+        player.setItemOnCursor(null);
 
         // close the player's current inventory if they have one open
         if (player.getOpenInventory().getTopInventory().getType() != InventoryType.CRAFTING||
@@ -88,6 +92,8 @@ public class ShulkerManager {
         chestSortManager.sort(player, inventory);
 
         player.openInventory(inventory);
+        // Restore the cursor item
+        player.setItemOnCursor(cursorItem);
         ItemStack clone = shulkerStack.clone();
         openShulkerInventories.put(inventory, new ShulkerOpenData(clone, player.getLocation(), slotType, rawSlot));
 
