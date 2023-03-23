@@ -69,12 +69,12 @@ public class InteractListener implements Listener {
         e.setCancelled(true);
         ItemStack oldItem = clicked.clone();
         // Run the handler in 1 tick to not desync the inventory.
-        Bukkit.getScheduler().runTask(instance, () ->
-            {
-                // Make sure the item has not changed since the click.
-                if (oldItem.equals(clicked)) {
-                    instance.getShulkerManager().openShulkerBoxInventory(player, clicked, SlotType.INVENTORY, e.getRawSlot());
-                }
-            });
+        Bukkit.getScheduler().runTask(instance, () -> {
+            ItemStack currentItem = clickedInventory.getItem(e.getSlot());
+            // Make sure the item has not changed since the click.
+            if (oldItem.equals(currentItem)) {
+                instance.getShulkerManager().openShulkerBoxInventory(player, currentItem, SlotType.INVENTORY, e.getRawSlot());
+            }
+        });
     }
 }
