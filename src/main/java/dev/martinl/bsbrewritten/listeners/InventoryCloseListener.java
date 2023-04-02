@@ -4,6 +4,7 @@ import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.manager.ShulkerOpenData;
 import dev.martinl.bsbrewritten.util.MaterialUtil;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,6 +12,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
@@ -168,14 +170,25 @@ public class InventoryCloseListener implements Listener {
      * */
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e){
-        Player player = e.getPlayer();
+        cancelIfPlayerHasShulkerOpen(e.getPlayer(), e);
+    }
 
+
+    /*
+     * This should prevent players from
+     * */
+    @EventHandler
+    public void onItemFrameInteract(PlayerInteractEntityEvent e){
+        cancelIfPlayerHasShulkerOpen(e.getPlayer(), e);
+    }
+
+
+    private void cancelIfPlayerHasShulkerOpen(Player player, Cancellable cancellable) {
         if (player.getOpenInventory().getType() != InventoryType.SHULKER_BOX)
             return; //check if the open inventory is one from a shulker box
         if (player.getOpenInventory().getTopInventory().getLocation() != null) return; //check if the shulker is a block
         if (!instance.getShulkerManager().doesPlayerHaveShulkerOpen(player.getUniqueId()))
             return; //check if the inventory belongs to BSB
-        e.setCancelled(true);
+        cancellable.setCancelled(true);
     }
-
 }
