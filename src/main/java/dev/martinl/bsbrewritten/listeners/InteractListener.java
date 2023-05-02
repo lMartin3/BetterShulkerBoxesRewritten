@@ -3,6 +3,7 @@ package dev.martinl.bsbrewritten.listeners;
 import dev.martinl.bsbrewritten.BSBRewritten;
 import dev.martinl.bsbrewritten.manager.SlotType;
 import dev.martinl.bsbrewritten.util.MaterialUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -66,7 +67,14 @@ public class InteractListener implements Listener {
         }
         if(!isShulker) return;
         e.setCancelled(true);
-        instance.getShulkerManager().openShulkerBoxInventory(player, clicked, SlotType.INVENTORY, e.getRawSlot());
-
+        ItemStack oldItem = clicked.clone();
+        // Run the handler in 1 tick to not desync the inventory.
+        Bukkit.getScheduler().runTask(instance, () -> {
+            ItemStack currentItem = clickedInventory.getItem(e.getSlot());
+            // Make sure the item has not changed since the click.
+            if (oldItem.equals(currentItem)) {
+                instance.getShulkerManager().openShulkerBoxInventory(player, currentItem, SlotType.INVENTORY, e.getRawSlot());
+            }
+        });
     }
 }
