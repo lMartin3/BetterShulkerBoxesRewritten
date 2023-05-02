@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -179,6 +180,15 @@ public class InventoryCloseListener implements Listener {
      * */
     @EventHandler
     public void onItemFrameInteract(PlayerInteractEntityEvent e){
+        cancelIfPlayerHasShulkerOpen(e.getPlayer(), e);
+    }
+
+    /*
+     * This should prevent players from putting a BSB shulker in auction
+     * (or otherwise use commands to remove it from their inventory) while having a BSB shulker open
+     */
+    @EventHandler
+    public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent e){
         cancelIfPlayerHasShulkerOpen(e.getPlayer(), e);
     }
 
